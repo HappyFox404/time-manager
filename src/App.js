@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Authorization from "./pages/Authorization.tsx";
+import Registration from "./pages/Registration.tsx";
+import Main from "./pages/Main.tsx";
+import ApplicationRoutes from "./core/Route.ts";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+export default function App() {
+    return (
+        <BrowserRouter>
+            <div className="application-page columns">
+                <Routes>
+                    <Route path={ApplicationRoutes.Application} element={<Main/>}/>
+                    <Route path={ApplicationRoutes.Authorization} element={<Authorization/>}/>
+                    <Route path={ApplicationRoutes.Registration} element={<Registration/>}/>
+                </Routes>
+            </div>
+        </BrowserRouter>
+    );
+};
