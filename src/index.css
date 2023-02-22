@@ -1,13 +1,8 @@
+body {
+  height: 100vh;
+  background-color: #EFEFEF;
+}
+
 ::-webkit-scrollbar {
- width: 0;
-}
-
-.application-page{
- height: 100vh;
-}
-
-.form-center{
- margin-top: calc(50vh - calc(250px / 2));
- height: 250px;
- width: 400px !important;
-}
+  width: 0;
+ }

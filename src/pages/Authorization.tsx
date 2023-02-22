@@ -1,15 +1,23 @@
-import * as React from 'react';
-import Input from "../component/Input.tsx";
+import React from 'react'
+import Input from '../components/Input'
+import Button from '../components/Button'
+import Form from '../components/Form'
 
-function Authorization(props) {
+export default function Authorization() : JSX.Element {
+    const styles = {
+        width: "500px",
+        height: "250px",
+        marginTop: "calc(50vh - calc(250px / 2))",
+        outline: "2px solid hsl(0, 0%, 96%)"
+    }
+
     return (
-        <div className="box is-narrow form-center column mx-auto">
-            <fieldset>
-                <Input title="Имя пользователя" placeholder="Введите имя пользователя..."/>
-                <Input title="Пароль" placeholder="Введите пароль..."/>
-            </fieldset>
+        <div className='column'>
+            <Form classes={['box', 'is-narrow', 'mx-auto']} styles={styles}>
+                <Input title='Имя пользователя'/>
+                <Input title='Пароль'/>
+                <Button title='Вход'/>
+            </Form>
         </div>
-    );
+    )
 }
-
-export default Authorization;
