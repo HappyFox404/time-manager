@@ -6,3 +6,7 @@ body {
 ::-webkit-scrollbar {
   width: 0;
  }
+
+.application-menu {
+  width: 250px !important;
+}

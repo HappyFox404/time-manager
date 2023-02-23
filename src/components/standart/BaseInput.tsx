@@ -1,4 +1,3 @@
-import { placeholder } from '@babel/types'
 import React, { useState } from 'react'
 
 export interface IInputType {
@@ -7,7 +6,7 @@ export interface IInputType {
     placeHolder?: string;
 }
 
-export default function Input({ title, placeHolder = "", value = "" }: IInputType) : JSX.Element {
+export default function BaseInput({ title, placeHolder = "", value = "" }: IInputType) : JSX.Element {
     const [inputValue, setInputValue] = useState(value);
 
     function changeInput(event : React.ChangeEvent<HTMLInputElement>){

@@ -1,7 +1,8 @@
 import React from 'react'
-import Input from '../components/Input'
-import Button from '../components/Button'
-import Form from '../components/Form'
+import Button from '../components/standart/Button'
+import Form from '../components/standart/Form'
+import Column from '../components/standart/Column'
+import BaseInput from '../components/standart/BaseInput'
 
 export default function Registration() : JSX.Element {
     const styles = {
@@ -12,13 +13,13 @@ export default function Registration() : JSX.Element {
     }
 
     return (
-        <div className='column'>
+        <Column>
             <Form classes={['box', 'is-narrow', 'mx-auto']} styles={styles}>
-                <Input title='Почта'/>
-                <Input title='Имя пользователя'/>
-                <Input title='Пароль'/>
+                <BaseInput title='Почта'/>
+                <BaseInput title='Имя пользователя'/>
+                <BaseInput title='Пароль'/>
                 <Button title='Регистрация'/>
             </Form>
-        </div>
+        </Column>
     )
 }
