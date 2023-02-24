@@ -5,15 +5,26 @@ export interface IFormValidate {
   isValid: (state: boolean) => boolean;
 }
 
-export interface IFormSubmit {
-  submit: () => void;
+export interface IFormType extends IBaseComponent {
+  callbackSubmit?: (event: React.SyntheticEvent) => void;
 }
 
-export interface IFormType extends IBaseComponent {}
+export default function Form({children, callbackSubmit, styles = null, classes = []}: IFormType) : JSX.Element {
+  const finalizeClasses = () : string => {
+    if(classes) return classes.join(' ');
+    return '';
+  }
 
-export default function Form({children, styles = null, classes = []}: IFormType) : JSX.Element {
+  const handleSumbit = (event : React.SyntheticEvent) =>{
+    event.preventDefault();
+    if(callbackSubmit)
+      callbackSubmit(event);
+  }
+  
   return (
-    <form style={styles} className={classes.join(' ')}>
+    <form style={styles} 
+    className={finalizeClasses()}
+    onSubmit={(event) => {handleSumbit(event);}}>
         {children}
     </form>
   )
