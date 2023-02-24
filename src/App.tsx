@@ -2,7 +2,7 @@ import { BrowserRouter,Navigate, Route, Routes } from "react-router-dom";
 import Base from "./pages/Base";
 import Authorization from "./pages/Authorization";
 import Registration from "./pages/Registration";
-import ApplicationRoutes from "./core/Routes";
+import ApplicationRoutes from "./core/ApplicationRoutes";
 
 function App() {
   return (

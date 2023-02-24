@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { SyntheticEvent } from 'react'
 import Button from '../components/standart/Button'
 import Form from '../components/standart/Form'
 import Column from '../components/standart/Column'
 import BaseInput from '../components/standart/BaseInput'
+import Submit from '../components/standart/Submit'
 
 export default function Authorization() : JSX.Element {
     const styles = {
@@ -12,12 +13,17 @@ export default function Authorization() : JSX.Element {
         outline: "2px solid hsl(0, 0%, 96%)"
     }
 
+    const handleAuthorizationSubmit = (event: React.SyntheticEvent) => {
+        console.log(event.target);
+    }
+
     return (
         <Column>
-            <Form classes={['box', 'is-narrow', 'mx-auto']} styles={styles}>
+            <Form classes={['box', 'is-narrow', 'mx-auto']} styles={styles}
+                callbackSubmit={handleAuthorizationSubmit}>
                 <BaseInput title='Имя пользователя'/>
-                <BaseInput title='Пароль'/>
-                <Button title='Вход'/>
+                <BaseInput title='Пароль' type="password"/>
+                <Submit title='Вход'/>
             </Form>
         </Column>
     )

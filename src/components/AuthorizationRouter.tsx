@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom';
-import ApplicationRoutes from '../core/Routes';
+import ApplicationRoutes from '../core/ApplicationRoutes';
 import ITokenData from '../core/interfaces/ITokenData';
 import TokenLocalStorage from '../core/TokenLocalStorage';
 

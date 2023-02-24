@@ -9,7 +9,6 @@ export default function Button({ title, callback }: IButtonType) : JSX.Element {
 
     const clickButton = (event : React.MouseEvent<HTMLElement>) =>{
         event.preventDefault();
-        console.log('click event');
         if(callback)
             callback();
     }
