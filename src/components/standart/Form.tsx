@@ -6,25 +6,19 @@ export interface IFormValidate {
 }
 
 export interface IFormType extends IBaseComponent {
-  callbackSubmit?: (event: React.SyntheticEvent) => void;
+  handleSubmit?: (event: React.SyntheticEvent) => void;
 }
 
-export default function Form({children, callbackSubmit, styles = null, classes = []}: IFormType) : JSX.Element {
+export default function Form({children, handleSubmit, styles = null, classes = []}: IFormType) : JSX.Element {
   const finalizeClasses = () : string => {
     if(classes) return classes.join(' ');
     return '';
-  }
-
-  const handleSumbit = (event : React.SyntheticEvent) =>{
-    event.preventDefault();
-    if(callbackSubmit)
-      callbackSubmit(event);
   }
   
   return (
     <form style={styles} 
     className={finalizeClasses()}
-    onSubmit={(event) => {handleSumbit(event);}}>
+    onSubmit={handleSubmit}>
         {children}
     </form>
   )

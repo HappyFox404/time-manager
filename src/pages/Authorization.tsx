@@ -4,6 +4,8 @@ import Form from '../components/standart/Form'
 import Column from '../components/standart/Column'
 import BaseInput from '../components/standart/BaseInput'
 import Submit from '../components/standart/Submit'
+import axios from 'axios'
+import ApiRoutes, { RouteBuilder } from '../core/ApiRoutes'
 
 export default function Authorization() : JSX.Element {
     const styles = {
@@ -14,15 +16,30 @@ export default function Authorization() : JSX.Element {
     }
 
     const handleAuthorizationSubmit = (event: React.SyntheticEvent) => {
-        console.log(event.target);
+        event.preventDefault();
+        const target = event.target as typeof event.target & {
+            userName: { value: string };
+            userPassword: { value: string };
+          };
+        const userName: string = target.userName.value;
+        const password: string = target.userPassword.value;
+
+        axios.get(RouteBuilder.route(ApiRoutes.UserLogin), {
+            params: {
+                userName,
+                password
+            }
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
     }
 
     return (
         <Column>
             <Form classes={['box', 'is-narrow', 'mx-auto']} styles={styles}
-                callbackSubmit={handleAuthorizationSubmit}>
-                <BaseInput title='Имя пользователя'/>
-                <BaseInput title='Пароль' type="password"/>
+                handleSubmit={handleAuthorizationSubmit}>
+                <BaseInput title='Имя пользователя' name='userName'/>
+                <BaseInput title='Пароль' name='userPassword' type="password"/>
                 <Submit title='Вход'/>
             </Form>
         </Column>

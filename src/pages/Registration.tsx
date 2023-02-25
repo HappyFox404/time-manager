@@ -15,9 +15,9 @@ export default function Registration() : JSX.Element {
     return (
         <Column>
             <Form classes={['box', 'is-narrow', 'mx-auto']} styles={styles}>
-                <BaseInput title='Почта'/>
-                <BaseInput title='Имя пользователя'/>
-                <BaseInput title='Пароль'/>
+                <BaseInput title='Почта' name='userEmail'/>
+                <BaseInput title='Имя пользователя' name='userName'/>
+                <BaseInput title='Пароль' name='userPassword'/>
                 <Button title='Регистрация'/>
             </Form>
         </Column>
