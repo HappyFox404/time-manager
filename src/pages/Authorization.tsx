@@ -9,6 +9,9 @@ import ApiRoutes, { RouteBuilder } from '../core/ApiRoutes'
 import FlexHorizontalContainer from '../components/standart/FlexHorizontalContainer'
 import { useNavigate } from 'react-router-dom'
 import ApplicationRoutes from '../core/ApplicationRoutes'
+import { getDataFromApiResponse, isResponseSuccess } from '../core/Toolkit'
+import TokenLocalStorage from '../core/TokenLocalStorage'
+import ITokenStorage from '../core/interfaces/ITokenStorage'
 
 export default function Authorization(): JSX.Element {
     const navigate = useNavigate();
@@ -18,6 +21,11 @@ export default function Authorization(): JSX.Element {
         height: "250px",
         marginTop: "calc(50vh - calc(250px / 2))",
         outline: "2px solid hsl(0, 0%, 96%)"
+    }
+
+    type AuthorizationResponse = {
+        token: string;
+        refreshToken: string;
     }
 
     const handleAuthorizationSubmit = (event: React.SyntheticEvent) => {
@@ -35,8 +43,18 @@ export default function Authorization(): JSX.Element {
                 password
             }
         })
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
+        .then((res : any) => {
+            const data = getDataFromApiResponse<AuthorizationResponse>(res.data);
+            if(isResponseSuccess(data?.base)){
+                const storage : ITokenStorage = new TokenLocalStorage();
+                storage.saveStorage({
+                    token: data?.value?.data?.token,
+                    refreshToken: data?.value?.data?.refreshToken,
+                    isAuthorization: true
+                })
+            }
+        })
+        .catch((err : any) => console.log(err));
     }
 
     const handleRegistrationClick = () => {
