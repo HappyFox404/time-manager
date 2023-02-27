@@ -1,14 +1,10 @@
 import React from "react";
 import IBaseComponent from "../../core/interfaces/IBaseComponent";
+import {finalizeClassName} from "../../core/Toolkit";
 
 export default function FlexHorizontalContainer({children, styles, classes}: IBaseComponent) : JSX.Element{
-    const finalizeClasses = () : string => {
-        if(classes) return ['is-flex','is-flex-direction-row', ...classes].join(' ');
-        return 'is-flex is-flex-direction-row';
-    }
-    
     return (
-        <div className={finalizeClasses()} style={styles}>
+        <div className={finalizeClassName(['is-flex','is-flex-direction-row'], classes)} style={styles}>
             {children}
         </div>
     )

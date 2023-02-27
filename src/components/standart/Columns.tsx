@@ -1,16 +1,10 @@
 import React from 'react'
 import IBaseComponent from '../../core/interfaces/IBaseComponent';
+import {finalizeClassName} from '../../core/Toolkit';
 
-export interface IColumnsType extends IBaseComponent{}
-
-export default function Columns({ classes, children }: IColumnsType): JSX.Element {
-    const finalizeClasses = () : string => {
-        if(classes) return ['columns', ...classes].join(' ');
-        return 'columns';
-    }
-    
+export default function Columns({ classes, children }: IBaseComponent): JSX.Element {
     return (
-        <div className={finalizeClasses()}>
+        <div className={finalizeClassName(['columns'], classes)}>
             { children }
         </div>
     )
