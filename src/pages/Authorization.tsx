@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react'
+import React, {SyntheticEvent, useState} from 'react'
 import Button from '../components/standart/Button'
 import Form from '../components/standart/Form'
 import Column from '../components/standart/Column'
@@ -9,16 +9,22 @@ import ApiRoutes, { RouteBuilder } from '../core/ApiRoutes'
 import FlexHorizontalContainer from '../components/standart/FlexHorizontalContainer'
 import { useNavigate } from 'react-router-dom'
 import ApplicationRoutes from '../core/ApplicationRoutes'
-import { getDataFromApiResponse, isResponseSuccess } from '../core/Toolkit'
+import {getDataApiResponse, getResponseApi, isResponseError, isResponseSuccess} from '../core/Toolkit'
 import TokenLocalStorage from '../core/TokenLocalStorage'
 import ITokenStorage from '../core/interfaces/ITokenStorage'
+import Notification from "../components/standart/Notification";
+import {useDispatch} from "react-redux";
+import ApplicationStateActions from "../core/interfaces/IApplicationState";
 
 export default function Authorization(): JSX.Element {
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
+    const [validationError, setValidationError] = useState('');
 
     const styles = {
         width: "500px",
-        height: "250px",
+        minHeight: "250px",
         marginTop: "calc(50vh - calc(250px / 2))",
         outline: "2px solid hsl(0, 0%, 96%)"
     }
@@ -44,14 +50,21 @@ export default function Authorization(): JSX.Element {
             }
         })
         .then((res : any) => {
-            const data = getDataFromApiResponse<AuthorizationResponse>(res.data);
-            if(isResponseSuccess(data?.base)){
-                const storage : ITokenStorage = new TokenLocalStorage();
-                storage.saveStorage({
-                    token: data?.value?.data?.token,
-                    refreshToken: data?.value?.data?.refreshToken,
-                    isAuthorization: true
-                })
+            const resposne = getResponseApi<AuthorizationResponse>(res.data);
+            if(isResponseSuccess<AuthorizationResponse>(resposne)){
+                const responseData = getDataApiResponse<AuthorizationResponse>(res.data);
+                if(responseData !== null) {
+                    dispatch({type: ApplicationStateActions.Authorize, tokenData:{
+                            token: responseData?.data?.token ?? '',
+                            refreshToken: responseData?.data?.refreshToken ?? '',
+                            isAuthorization: true
+                        }});
+                    navigate(ApplicationRoutes.Base);
+                }
+            }
+            if(isResponseError<AuthorizationResponse>(resposne)){
+                const responseData = getDataApiResponse<AuthorizationResponse>(res.data);
+                setValidationError(responseData?.message ?? 'Непредвиденная ошибка');
             }
         })
         .catch((err : any) => console.log(err));
@@ -65,6 +78,7 @@ export default function Authorization(): JSX.Element {
         <Column>
             <Form classes={['box', 'is-narrow', 'mx-auto']} styles={styles}
                 handleSubmit={handleAuthorizationSubmit}>
+                <Notification text={validationError} classes={['is-danger','is-light']}/>
                 <BaseInput title='Имя пользователя' name='userName' placeHolder='Введите имя пользователя'/>
                 <BaseInput title='Пароль' name='userPassword' type="password" placeHolder='Введите пароль'/>
                 <FlexHorizontalContainer>

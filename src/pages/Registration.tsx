@@ -9,16 +9,20 @@ import { useNavigate } from 'react-router-dom'
 import ApplicationRoutes from '../core/ApplicationRoutes'
 import FlexHorizontalContainer from '../components/standart/FlexHorizontalContainer'
 import Notification from '../components/standart/Notification'
-import { ApiResponse, getDataFromApiResponse } from '../core/Toolkit'
+import {getDataApiResponse, getResponseApi, isResponseError, isResponseSuccess} from '../core/Toolkit'
 import Submit from '../components/standart/Submit'
+import {useDispatch} from "react-redux";
+import ApplicationStateActions from "../core/interfaces/IApplicationState";
 
 export default function Registration(): JSX.Element {
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
-    const [validationError, setValidationErrorError] = useState('');
+    const [validationError, setValidationError] = useState('');
 
     const styles = {
         width: "500px",
-        height: "340px",
+        minHeight: "340px",
         marginTop: "calc(50vh - calc(340px / 2))",
         outline: "2px solid hsl(0, 0%, 96%)"
     }
@@ -46,7 +50,22 @@ export default function Registration(): JSX.Element {
             email
         })
         .then((res : any) => {
-            const data = getDataFromApiResponse<RegistrationResponse>(res.data);
+            const response = getResponseApi<RegistrationResponse>(res.data);
+            if(isResponseSuccess<RegistrationResponse>(response)){
+                const responseData = getDataApiResponse<RegistrationResponse>(res.data);
+                if(responseData !== null){
+                    dispatch({type: ApplicationStateActions.Authorize, tokenData:{
+                            token: responseData?.data?.token ?? '',
+                            refreshToken: responseData?.data?.refreshToken ?? '',
+                            isAuthorization: true
+                        }});
+                    navigate(ApplicationRoutes.Base);
+                }
+            }
+            if(isResponseError<RegistrationResponse>(response)){
+                const responseData = getDataApiResponse<RegistrationResponse>(res.data);
+                setValidationError(responseData?.message ?? 'Непредвиденная ошибка');
+            }
          })
         .catch((err : any) => { console.log(err); });
     }
