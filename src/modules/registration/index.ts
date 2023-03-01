@@ -1,3 +1,1 @@
-import RegistrationForm from "./components/RegistrationForm";
-
-export default RegistrationForm;
+export { RegistrationForm } from "./components/RegistrationForm"

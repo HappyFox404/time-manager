@@ -1,6 +1,6 @@
 import React, {SyntheticEvent, useState} from 'react'
-import AuthorizationForm from '../modules/authorization/index'
 import Column from '../ui/Column'
+import {AuthorizationForm} from "../modules/authorization";
 
 export default function Authorization(): JSX.Element {
     return (

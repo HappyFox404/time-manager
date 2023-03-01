@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RouteBuilder } from "../../../RouteBuilder";
+import { RouteBuilder } from "../../../constants/RouteBuilder";
 
 const userLoginMethod : string = 'user/registration';
 

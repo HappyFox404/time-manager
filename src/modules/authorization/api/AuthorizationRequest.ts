@@ -1,14 +1,14 @@
 import axios from "axios";
-import { RouteBuilder } from "../../../RouteBuilder";
+import { RouteBuilder } from "../../../constants/RouteBuilder";
 
-const userLoginMethod : string = 'user/authorization';
+const userLoginMethod: string = 'user/authorization';
 
 export interface AuthorizationResponse {
     token: string;
     refreshToken: string;
 }
 
-export function AuthorizationRequest(userName: string, password: string){
+export function AuthorizationRequest(userName: string, password: string) {
     axios.get(RouteBuilder.CreateRoute(userLoginMethod), {
         params: {
             userName,

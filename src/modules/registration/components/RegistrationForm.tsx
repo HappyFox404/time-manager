@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { RegistrationRequest } from '../api/RegistrationRequest';
-import AppRoutes from '../../../AppRoutes';
+import AppRoutes from '../../../constants/AppRoutes';
 
 import Form from '../../../ui/Form';
 import Notification from '../../../ui/Notification';
@@ -11,7 +11,7 @@ import Submit from '../../../ui/Submit';
 import Button from '../../../ui/Button';
 import PasswordInput from '../../../components/PasswordInput';
 
-export default function RegistrationForm(): JSX.Element {
+export function RegistrationForm(): JSX.Element {
     const navigate = useNavigate();
 
     const [validationError, setValidationError] = useState('');
