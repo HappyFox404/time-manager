@@ -1,32 +1,21 @@
-import { BrowserRouter,Navigate, Route, Routes } from "react-router-dom";
-import Base from "./pages/Base";
-import Authorization from "./pages/Authorization";
-import Registration from "./pages/Registration";
-import ApplicationRoutes from "./core/ApplicationRoutes";
-import React from "react";
-import TokenLocalStorage from "./core/TokenLocalStorage";
-import {legacy_createStore as createStore} from 'redux'
-import ApplicationStateActions, {IApplicationState} from "./core/interfaces/IApplicationState";
-import ITokenData from "./core/interfaces/ITokenData";
-import {Provider} from "react-redux";
-import reducer from "./core/Reducer";
-
-const store = createStore(reducer)
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import AppRoutes from "./AppRoutes";
+import AuthorizationPage from "./pages/AuthorizationPage";
+import RegistrationPage from "./pages/RegistrationPage";
+import BasePage from "./pages/BasePage";
 
 function App() {
     return (
-        <Provider store={store}>
-            <BrowserRouter>
+        <BrowserRouter>
                 <div className="application-page columns">
                     <Routes>
-                        <Route path={ApplicationRoutes.Base} element={<Base />} />
-                        <Route path={ApplicationRoutes.Authorization} element={<Authorization />} />
-                        <Route path={ApplicationRoutes.Registration} element={<Registration />} />
-                        <Route path="*" element={<Navigate to={ApplicationRoutes.Base} replace />}/>
+                        <Route path={AppRoutes.Authorization} element={<AuthorizationPage />} />
+                        <Route path={AppRoutes.Registration} element={<RegistrationPage />} />
+                        <Route path={AppRoutes.Base} element={<BasePage />} />
+                        <Route path="*" element={<Navigate to={AppRoutes.Base} replace />}/>
                     </Routes>
                 </div>
             </BrowserRouter>
-        </Provider>
     );
 }
 
