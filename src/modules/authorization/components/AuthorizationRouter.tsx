@@ -1,10 +1,10 @@
 import {useSelector} from "react-redux";
-import AppRoutes from "../../../constants/AppRoutes";
+import AppRoutes from "../../../core/AppRoutes";
 import {Navigate, useLocation, useNavigate} from "react-router-dom";
 import IUserState from "../models/IUserState";
 import ITokenData from "../models/ITokenData";
 import {useEffect} from "react";
-import appRoutes from "../../../constants/AppRoutes";
+import appRoutes from "../../../core/AppRoutes";
 
 export function AuthorizationRouter(): JSX.Element {
     const tokenData = useSelector((state : IUserState) => state.tokenData);

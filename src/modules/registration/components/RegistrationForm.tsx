@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { RegistrationRequest } from '../api/RegistrationRequest';
-import AppRoutes from '../../../constants/AppRoutes';
+import AppRoutes from '../../../core/AppRoutes';
 
 import Form from '../../../ui/Form';
 import Notification from '../../../ui/Notification';
@@ -10,9 +10,11 @@ import FlexHorizontalContainer from '../../../ui/FlexHorizontalContainer';
 import Submit from '../../../ui/Submit';
 import Button from '../../../ui/Button';
 import PasswordInput from '../../../components/PasswordInput';
+import {useDispatch} from "react-redux";
 
 export function RegistrationForm(): JSX.Element {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [validationError, setValidationError] = useState('');
 
@@ -35,7 +37,7 @@ export function RegistrationForm(): JSX.Element {
         const password: string = target.userPassword.value;
         const email: string = target.userEmail.value;
 
-        RegistrationRequest(userName, password, email);
+        RegistrationRequest(userName, password, email, navigate, dispatch);
     }
 
     const handleAuthorizationClick = () => {

@@ -14,6 +14,7 @@ export default function DefaultInput({ title, name, handleChange, placeHolder = 
                     type='password'
                     placeholder={placeHolder}
                     value={value}
+                    name={name}
                     handleChange={handleChange}
                 />
             </Control>

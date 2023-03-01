@@ -1,15 +1,24 @@
 import axios from "axios";
-import { RouteBuilder } from "../../../constants/RouteBuilder";
+import { RouteBuilder } from "../../../core/RouteBuilder";
+import {getDataApiResponse, getResponseApi, isResponseError, isResponseSuccess} from "../../../core/ResponseHelper";
+import {NavigateFunction} from "react-router-dom";
+import {Dispatch} from "redux";
+import UserStoreActions from "../../authorization/models/UserStoreActions";
+import AppRoutes from "../../../core/AppRoutes";
 
-const userLoginMethod : string = 'user/registration';
+const userRegisterMethod : string = 'user/registration';
 
 export interface RegistrationResponse{
     token: string;
     refreshToken: string;
 }
 
-export function RegistrationRequest(userName: string, password: string, email: string){
-    /*axios.post(RouteBuilder.route(ApiRoutes.UserRegistration), {
+export function RegistrationRequest(userName: string,
+                                    password: string,
+                                    email: string,
+                                    navigate : NavigateFunction,
+                                    dispatch : Dispatch){
+    axios.post(RouteBuilder.CreateRoute(userRegisterMethod), {
             userName,
             password,
             email
@@ -19,18 +28,18 @@ export function RegistrationRequest(userName: string, password: string, email: s
             if(isResponseSuccess<RegistrationResponse>(response)){
                 const responseData = getDataApiResponse<RegistrationResponse>(res.data);
                 if(responseData !== null){
-                    dispatch({type: ApplicationStateActions.Authorize, tokenData:{
+                    dispatch({type: UserStoreActions.Authorize, tokenData:{
                             token: responseData?.data?.token ?? '',
                             refreshToken: responseData?.data?.refreshToken ?? '',
                             isAuthorization: true
                         }});
-                    navigate(ApplicationRoutes.Base);
+                    navigate(AppRoutes.Base);
                 }
             }
             if(isResponseError<RegistrationResponse>(response)){
                 const responseData = getDataApiResponse<RegistrationResponse>(res.data);
-                setValidationError(responseData?.message ?? 'Непредвиденная ошибка');
+                //setValidationError(responseData?.message ?? 'Непредвиденная ошибка');
             }
          })
-        .catch((err : any) => { console.log(err); });*/
+        .catch((err : any) => { console.log(err); });
 }

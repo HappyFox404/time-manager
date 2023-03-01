@@ -20,6 +20,7 @@ export default function DefaultInput({ title, name, handleChange, placeHolder = 
                 <Input
                     placeholder={placeHolder}
                     value={value}
+                    name={name}
                     handleChange={handleChange}
                 />
             </Control>

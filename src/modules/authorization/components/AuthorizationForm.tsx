@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AppRoutes from '../../../constants/AppRoutes';
+import AppRoutes from '../../../core/AppRoutes';
 import Form from '../../../ui/Form';
 import Notification from '../../../ui/Notification';
 import DefaultInput from '../../../components/DefaultInput';
@@ -9,9 +9,11 @@ import Submit from '../../../ui/Submit';
 import Button from '../../../ui/Button';
 import PasswordInput from '../../../components/PasswordInput';
 import {AuthorizationRequest} from "../api/AuthorizationRequest";
+import {useDispatch} from "react-redux";
 
 
 export function AuthorizationForm(): JSX.Element {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [validationError, setValidationError] = useState('');
 
@@ -31,7 +33,7 @@ export function AuthorizationForm(): JSX.Element {
         const userName: string = target.userName.value;
         const password: string = target.userPassword.value;
 
-        AuthorizationRequest(userName, password);
+        AuthorizationRequest(userName, password, navigate, dispatch);
     }
 
     const handleRegistrationClick = () => {

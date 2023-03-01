@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import AppRoutes from "./constants/AppRoutes";
+import AppRoutes from "./core/AppRoutes";
 import AuthorizationPage from "./pages/AuthorizationPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import BasePage from "./pages/BasePage";
