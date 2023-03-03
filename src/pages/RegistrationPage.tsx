@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import Column from '../ui/Column'
 import {RegistrationForm} from "../modules/registration";
 

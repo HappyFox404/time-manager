@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AppRoutes from "./core/AppRoutes";
 import AuthorizationPage from "./pages/AuthorizationPage";
 import RegistrationPage from "./pages/RegistrationPage";

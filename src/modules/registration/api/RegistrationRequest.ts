@@ -6,7 +6,7 @@ import {Dispatch} from "redux";
 import UserStoreActions from "../../authorization/models/UserStoreActions";
 import AppRoutes from "../../../core/AppRoutes";
 
-const userRegisterMethod : string = 'user/registration';
+const userRegisterMethod : string = 'user/register';
 
 export interface RegistrationResponse{
     token: string;
@@ -17,7 +17,8 @@ export function RegistrationRequest(userName: string,
                                     password: string,
                                     email: string,
                                     navigate : NavigateFunction,
-                                    dispatch : Dispatch){
+                                    dispatch : Dispatch,
+                                    addError : (value : string) => void){
     axios.post(RouteBuilder.CreateRoute(userRegisterMethod), {
             userName,
             password,
@@ -28,7 +29,8 @@ export function RegistrationRequest(userName: string,
             if(isResponseSuccess<RegistrationResponse>(response)){
                 const responseData = getDataApiResponse<RegistrationResponse>(res.data);
                 if(responseData !== null){
-                    dispatch({type: UserStoreActions.Authorize, tokenData:{
+                    console.log(res);
+                    dispatch({type: UserStoreActions.Authorize, data:{
                             token: responseData?.data?.token ?? '',
                             refreshToken: responseData?.data?.refreshToken ?? '',
                             isAuthorization: true
@@ -38,8 +40,11 @@ export function RegistrationRequest(userName: string,
             }
             if(isResponseError<RegistrationResponse>(response)){
                 const responseData = getDataApiResponse<RegistrationResponse>(res.data);
-                //setValidationError(responseData?.message ?? 'Непредвиденная ошибка');
+                addError(responseData?.message ?? 'Произошла непредвиденная ошибка');
             }
          })
-        .catch((err : any) => { console.log(err); });
+        .catch((err : any) => {
+            console.log(err);
+            addError('Произошла непредвиденная ошибка');
+        });
 }

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import { RegistrationRequest } from '../api/RegistrationRequest';
+import React, {useState} from 'react'
+import {useNavigate} from 'react-router-dom';
+import {RegistrationRequest} from '../api/RegistrationRequest';
 import AppRoutes from '../../../core/AppRoutes';
 
 import Form from '../../../ui/Form';
@@ -16,7 +16,14 @@ export function RegistrationForm(): JSX.Element {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [validationError, setValidationError] = useState('');
+    const [generalError, setGeneralError] = useState<string>('');
+
+    const [emailValue, setEmailValue] = useState<string>('');
+    const [userNameValue, setUserNameValue] = useState<string>('');
+    const [passwordValue, setPasswordValue] = useState<string>('');
+    const [passwordConfirmValue, setPasswordConfirmValue] = useState<string>('');
+
+    const setSubmitError = (value: string) => setGeneralError(value);
 
     const styles = {
         width: "500px",
@@ -25,8 +32,29 @@ export function RegistrationForm(): JSX.Element {
         outline: "2px solid hsl(0, 0%, 96%)"
     }
 
+    const validate = () : boolean => {
+        if(emailValue.length === 0){
+            setGeneralError("Email обязателен");
+            return false;
+        }
+        if(userNameValue.length === 0){
+            setGeneralError("Имя пользователя обязателено");
+            return false;
+        }
+        if(passwordValue !== passwordConfirmValue){
+            setGeneralError("Пароли не совпадают");
+            return false;
+        }
+
+        return true;
+    }
+
     const handleRegistrtionSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
+
+        if(!validate()){
+            return;
+        }
 
         const target = event.target as typeof event.target & {
             userName: { value: string };
@@ -37,7 +65,7 @@ export function RegistrationForm(): JSX.Element {
         const password: string = target.userPassword.value;
         const email: string = target.userEmail.value;
 
-        RegistrationRequest(userName, password, email, navigate, dispatch);
+        RegistrationRequest(userName, password, email, navigate, dispatch, setSubmitError);
     }
 
     const handleAuthorizationClick = () => {
@@ -47,10 +75,11 @@ export function RegistrationForm(): JSX.Element {
     return (
         <Form classes={['box', 'is-narrow', 'mx-auto']} styles={styles}
             handleSubmit={handleRegistrtionSubmit}>
-            <Notification text={validationError} classes={['is-danger', 'is-light']} />
-            <DefaultInput title='Почта' name='userEmail' placeHolder='Введите email' />
-            <DefaultInput title='Имя пользователя' name='userName' placeHolder='Введите имя пользователя' />
-            <PasswordInput title='Пароль' name='userPassword' placeHolder='Введите пароль' />
+            <Notification text={generalError} classes={['is-danger', 'is-light']} />
+            <DefaultInput title='Почта' name='userEmail' placeHolder='Введите email' handleChange={setEmailValue}/>
+            <DefaultInput title='Имя пользователя' name='userName' placeHolder='Введите имя пользователя' handleChange={setUserNameValue}/>
+            <PasswordInput title='Пароль' name='userPassword' placeHolder='Введите пароль' handleChange={setPasswordValue}/>
+            <PasswordInput title='Подтвержение пароля' name='userPasswordConfirm' placeHolder='Введите пароль' handleChange={setPasswordConfirmValue}/>
             <FlexHorizontalContainer>
                 <Submit title='Создать аккаунт' classes={['is-dark']} />
                 <Button title='Авторизация'

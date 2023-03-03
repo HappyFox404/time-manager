@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { IBaseComponent, finalizeClassName } from './IBaseComponent';
 
 export interface ILabelType extends IBaseComponent {
