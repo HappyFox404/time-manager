@@ -1,3 +1,4 @@
+import React from 'react'
 import { IBaseComponent, finalizeClassName } from './IBaseComponent';
 
 export interface ILabelType extends IBaseComponent {
