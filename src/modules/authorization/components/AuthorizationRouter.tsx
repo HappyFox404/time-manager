@@ -28,9 +28,9 @@ export function AuthorizationRouter(): JSX.Element {
         //debugger;
         if(isAuthorization == false && (location.pathname !== AppRoutes.Authorization && location.pathname !== AppRoutes.Registration)) {
             navigate(AppRoutes.Authorization);
-        } else if(isAuthorization == true && (location.pathname === AppRoutes.Authorization || location.pathname === AppRoutes.Registration)) {
+        } else if(isAuthorization === true && (location.pathname === AppRoutes.Authorization || location.pathname === AppRoutes.Registration)) {
             navigate(AppRoutes.Base);
-        } else if(isAuthorization == false && location.pathname === ''){
+        } else if(isAuthorization === false && location.pathname === ''){
             navigate(AppRoutes.Authorization);
         }
     };

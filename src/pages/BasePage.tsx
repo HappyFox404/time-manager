@@ -3,8 +3,16 @@ import Column from '../ui/Column'
 import Columns from '../ui/Columns'
 import Menu from "../ui/Menu";
 import {MainMenu} from "../modules/main";
+import {Route, Routes} from "react-router-dom";
+import AppRoutes from "../core/AppRoutes";
+import AuthorizationPage from "./AuthorizationPage";
+import RegistrationPage from "./RegistrationPage";
 
-export default function BasePage() {
+export interface IBasePage {
+    element?: JSX.Element;
+};
+
+export default function BasePage({element} : IBasePage) : JSX.Element {
   return (
       <Column>
         <Columns>
@@ -12,9 +20,7 @@ export default function BasePage() {
             <MainMenu/>
           </Column>
           <Column>
-            <div>
-              Данные
-            </div>
+              { element }
           </Column>
         </Columns>
       </Column>

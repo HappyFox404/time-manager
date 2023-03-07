@@ -1,34 +1,37 @@
 import React, { useState } from 'react'
 import DefaultMenu, {IDefaultMenuGroup, IDefaultMenuType} from "../../../components/DefaultMenu";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
+import AppRoutes from "../../../core/AppRoutes";
 
 export function MainMenu(): JSX.Element {
+    const location = useLocation();
     const styles = {
-        height: '98vh',
+        height: '99vh',
     };
+    function getItemPath(route : string) : boolean {
+        const itemPath = location.pathname.split('/');
+        const needRoute = route.split('/');
+        let result = true;
+        if(itemPath.length > 0 && needRoute.length > 0){
+            needRoute.forEach(item => {
+                if(itemPath.includes(item) === false){
+                    result = false;
+                }
+            });
+            return result;
+        }
+        return false;
+    }
 
     const groups : IDefaultMenuGroup[] = [
-        {label: "Тест 1", items: [
-                {isActive: true, name: 'Кнопка 1', link: ''},
-                {isActive: false, name: 'Кнопка 2', link: ''},
-                {isActive: false, name: 'Кнопка 3', link: ''},
-                {isActive: false, name: 'Кнопка 4', link: ''},
+        {label: "Расписание", items: [
+                {isActive: getItemPath(AppRoutes.ScheduleView), name: 'Просмотр', link: AppRoutes.Base+AppRoutes.ScheduleView},
+                {isActive: getItemPath(AppRoutes.ScheduleAdd), name: 'Добавление', link: AppRoutes.Base+AppRoutes.ScheduleAdd},
             ]},
-        {label: "Тест 2", items: [
-                {isActive: false, name: 'Кнопка 1', link: ''},
-                {isActive: false, name: 'Кнопка 2', link: ''},
-                {isActive: false, name: 'Кнопка 3', link: ''},
-                {isActive: false, name: 'Кнопка 4', link: ''},
-            ]},
-        {label: "Тест 3", items: [
-                {isActive: false, name: 'Кнопка 1', link: ''},
-                {isActive: false, name: 'Кнопка 2', link: ''},
-                {isActive: false, name: 'Кнопка 3', link: ''},
-                {isActive: false, name: 'Кнопка 4', link: ''},
+        {label: "Пользователь", items: [
+                {isActive: getItemPath(AppRoutes.Logout), name: 'Выйти', link: AppRoutes.Base+AppRoutes.Logout},
             ]},
     ];
 
-    return (
-        <DefaultMenu groups={groups} styles={styles}/>
-    )
+    return (<DefaultMenu groups={groups} styles={styles}/>)
 }

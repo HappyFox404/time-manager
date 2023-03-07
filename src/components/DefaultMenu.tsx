@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {Fragment, useState} from 'react'
 import Label from '../ui/Label';
 import Field from '../ui/Field';
 import Control from '../ui/Control';
@@ -27,20 +27,22 @@ export interface IDefaultMenuItem {
 }
 
 export default function DefaultMenu({ groups, styles }: IDefaultMenuType): JSX.Element {
-    const createGroup = (group : IDefaultMenuGroup) : JSX.Element => <>
-        <MenuLabel title={group.label}/>
-        {createMenuList(group.items)}
-    </>;
-
-    const createMenuList = (items: IDefaultMenuItem[]) : JSX.Element => <MenuList>{ createItems(items) }</MenuList>;
-
-    const createItems = (items: IDefaultMenuItem[]) : JSX.Element[] => items && items.map(item => <MenuItem>
-        <Link className={[(item.isActive) ? 'is-active' : ''].join(' ')} to={item.link ?? '#'}>{item.name}</Link>
-    </MenuItem>);
-
     return (
         <Menu classes={['box', 'm-1', 'has-background-white-ter']} styles={styles}>
-            {groups && groups.map(item => createGroup(item))}
+            {
+                groups && groups.map((group, groupId) => <Fragment key={`group.${groupId}`}>
+                    <MenuLabel key={`group.label.${groupId}`} title={group.label}/>
+                    {
+                        <MenuList key={`group.list.${groupId}`}>
+                            {
+                                group.items && group.items.map((item, itemId) => <MenuItem key={`item.${groupId}.${itemId}`}>
+                                    <Link className={[(item.isActive) ? 'is-active' : ''].join(' ')} to={item.link ?? '#'}>{item.name}</Link>
+                                </MenuItem>)
+                            }
+                        </MenuList>
+                    }
+                </Fragment>)
+            }
         </Menu>
     )
 }
