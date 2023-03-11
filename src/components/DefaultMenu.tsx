@@ -8,6 +8,7 @@ import MenuLabel from "../ui/MenuLabel";
 import MenuItem from "../ui/MenuItem";
 import {Link, LinkProps} from "react-router-dom";
 import MenuList from "../ui/MenuList";
+import {IBaseComponent} from "../ui/IBaseComponent";
 
 export interface IDefaultMenuType {
     groups: IDefaultMenuGroup[];

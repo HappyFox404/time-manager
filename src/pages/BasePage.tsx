@@ -16,10 +16,10 @@ export default function BasePage({element} : IBasePage) : JSX.Element {
   return (
       <Column>
         <Columns>
-          <Column classes={['is-narrow', 'application-menu']}>
+          <Column classes={['is-narrow', 'application-menu', 'pr-0']}>
             <MainMenu/>
           </Column>
-          <Column>
+          <Column classes={['pl-0']}>
               { element }
           </Column>
         </Columns>

@@ -8,6 +8,7 @@ export function MainMenu(): JSX.Element {
     const styles = {
         height: '99vh',
     };
+
     function getItemPath(route : string) : boolean {
         const itemPath = location.pathname.split('/');
         const needRoute = route.split('/');
@@ -33,5 +34,5 @@ export function MainMenu(): JSX.Element {
             ]},
     ];
 
-    return (<DefaultMenu groups={groups} styles={styles}/>)
+    return (<DefaultMenu groups={groups} styles={styles} />)
 }
