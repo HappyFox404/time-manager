@@ -1,12 +1,12 @@
 import React from 'react'
 import { IBaseComponent, finalizeClassName } from './IBaseComponent';
+import {IClickableType} from "./Clickable";
 
-export interface IButtonType extends IBaseComponent {
+export interface IButtonType extends IClickableType {
     title: string;
-    handleClick?: () => void;
 }
 
-export default function Button({ title, handleClick, classes, styles }: IButtonType): JSX.Element {
+export default function Button({ title, tooltip, handleClick, classes, styles }: IButtonType): JSX.Element {
     const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
         if (handleClick)
@@ -14,7 +14,10 @@ export default function Button({ title, handleClick, classes, styles }: IButtonT
     }
 
     return (
-        <a className={finalizeClassName(['button'], classes)} style={styles} onClick={handleButtonClick}>
+        <a className={finalizeClassName(['button'], classes)}
+           style={styles}
+           onClick={handleButtonClick}
+            title={tooltip}>
             {title}
         </a>
     )

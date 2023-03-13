@@ -6,6 +6,9 @@ import Notification from "../../../ui/Notification";
 import Schedule from "../models/schedule";
 import {faSquarePlus} from "@fortawesome/free-solid-svg-icons";
 import Icon from "../../../ui/Icon";
+import Button from "../../../ui/Button";
+import Clickable from "../../../ui/Clickable";
+import {AddSchedule} from "./AddSchedule";
 
 enum SchedulesMode {
     View,
@@ -21,9 +24,9 @@ export function SchedulesPage(): JSX.Element {
         height: '99vh',
     };
 
-    function SwitchMode() : JSX.Element {
+    function RenderMode() : JSX.Element {
         if(currentMode === SchedulesMode.Add){
-            return <Column><div>Добавление</div></Column>;
+            return <Column><AddSchedule/></Column>;
         }
         if(currentMode === SchedulesMode.Edit){
             return <Column><div>Редактирование</div></Column>;
@@ -38,6 +41,8 @@ export function SchedulesPage(): JSX.Element {
         return <Notification classes={['is-warning', 'box-app']} text={"Нет данных для отображения"}/>;
     };
 
+    function SwitchMode(mode: SchedulesMode) : void {setCurrentMode(() => mode)};
+
     useEffect(() => {
 
     }, []);
@@ -48,15 +53,16 @@ export function SchedulesPage(): JSX.Element {
         </Box>
         <Columns>
             <Column>
-                <Box classes={['box-app', 'p-3', 'is-size-4', 'mb-3', 'is-flex', 'is-justify-content-space-between']}>
-                    <span>Текущие элементы</span>
-                    <div>
-                        <Icon icon={faSquarePlus} classes={['has-text-info']} tooltip={'Добавить'}/>
-                    </div>
+                <Box classes={['box-app', 'p-3', 'is-size-4', 'mb-3', 'is-flex', 'is-justify-content-space-between', 'is-align-items-center']}>
+                    <span>Расписание:</span>
+                    <Clickable classes={['is-flex', 'is-align-items-center', 'is-justify-content-center']}
+                               handleClick={() => SwitchMode(SchedulesMode.Add)}>
+                        <Icon icon={faSquarePlus} iconSize={"lg"} classes={['icon-button']} tooltip={'Добавить'}/>
+                    </Clickable>
                 </Box>
                 {SchedulesList()}
             </Column>
-            { SwitchMode() }
+            { RenderMode() }
         </Columns>
     </Column>
 }

@@ -9,7 +9,7 @@ export interface IInputType extends IBaseComponent {
     handleChange?: (value: string) => void;
 }
 
-export default function Input({name, handleChange, value ="", placeholder, styles, classes, type = "text" }: IInputType) : JSX.Element {
+export default function Input({name, handleChange, value ="", placeholder, styles, classes, type = "text"}: IInputType) : JSX.Element {
     const [inputValue, setInputValue] = useState(value);
 
     function handleChangeInput(event : React.ChangeEvent<HTMLInputElement>){
