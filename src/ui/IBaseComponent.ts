@@ -1,6 +1,7 @@
 export interface IBaseComponent{
     styles?: any;
     classes?: string[];
+    tooltip?: string;
     children?: JSX.Element | JSX.Element[];
 }
 

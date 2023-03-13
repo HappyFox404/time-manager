@@ -1,12 +1,12 @@
-body {
-  height: 100vh;
-  background-color: #EFEFEF;
-}
-
 ::-webkit-scrollbar {
   width: 0;
- }
+}
 
 .application-menu {
-  width: 250px !important;
+  width: 300px !important;
+}
+
+.box-app{
+  /*outline: 2px solid lightgrey;*/
+  box-shadow: 0 0 3px;
 }

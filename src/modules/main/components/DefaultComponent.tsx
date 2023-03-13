@@ -7,14 +7,7 @@ export function DefaultComponent(): JSX.Element {
         height: '99vh',
     };
 
-    return (<Column classes={['m-0', 'p-1']} styles={styles}>
-        <Box classes={['mb-3']}>
-            <span className='is-flex is-justify-content-center'>Тайм менеджер</span>
-        </Box>
-        <Box classes={['mt-1']}>
-            <p>
-                Выберите действие для работы
-            </p>
-        </Box>
-    </Column>)
+    return (<div className='m-0 p-1 is-flex is-flex-direction-column is-justify-content-center' style={styles}>
+        <span className='is-flex is-justify-content-center is-size-1'>Тайм менеджер</span>
+    </div>)
 }

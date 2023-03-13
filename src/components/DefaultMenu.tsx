@@ -13,6 +13,7 @@ import {IBaseComponent} from "../ui/IBaseComponent";
 export interface IDefaultMenuType {
     groups: IDefaultMenuGroup[];
     styles?: any;
+    classes?:string[]
 }
 
 export interface IDefaultMenuGroup {
@@ -27,9 +28,9 @@ export interface IDefaultMenuItem {
     link?:  string;
 }
 
-export default function DefaultMenu({ groups, styles }: IDefaultMenuType): JSX.Element {
+export default function DefaultMenu({ groups, styles, classes }: IDefaultMenuType): JSX.Element {
     return (
-        <Menu classes={['box', 'm-1', 'has-background-white-ter']} styles={styles}>
+        <Menu classes={classes} styles={styles}>
             {
                 groups && groups.map((group, groupId) => <Fragment key={`group.${groupId}`}>
                     <MenuLabel key={`group.label.${groupId}`} title={group.label}/>

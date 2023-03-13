@@ -6,8 +6,8 @@ import BasePage from "./pages/BasePage";
 import {Provider, useSelector} from "react-redux";
 import {AuthorizationLogout, userStore} from "./modules/authorization";
 import {DefaultComponent} from "./modules/main/components/DefaultComponent";
-import {AddSchedule} from "./modules/main/components/AddSchedule";
 import IUserState from "./modules/authorization/models/IUserState";
+import {SchedulesPage} from "./modules/schedules";
 
 interface RouteMapItem {
     path: string;
@@ -33,13 +33,12 @@ function RoutesMap() {
         {path: AppRoutes.Registration, isNeedAuthorize: false, isNoWorkAuthorize: true, element: <RegistrationPage />},
         {path: AppRoutes.Base, isNeedAuthorize: true, element: <BasePage element={<DefaultComponent/>}/>},
         {path: AppRoutes.Base+AppRoutes.Logout, isNeedAuthorize: true, element: <BasePage element={<AuthorizationLogout/>}/>},
-        {path: AppRoutes.Base+AppRoutes.ScheduleView, isNeedAuthorize: true, element: <BasePage element={<div>Просмотр</div>}/>},
-        {path: AppRoutes.Base+AppRoutes.ScheduleAdd, isNeedAuthorize: true, element: <BasePage element={<AddSchedule/>}/>},
+        {path: AppRoutes.Base+AppRoutes.ScheduleView, isNeedAuthorize: true, element: <BasePage element={<SchedulesPage />}/>},
     ]
 
     return (
         <BrowserRouter>
-            <div className="application-page columns">
+            <div className="columns">
                 <Routes>
                     {routeMaps.length > 0 && routeMaps.map((item, idx) => {
                         if(item.isNeedAuthorize === true){

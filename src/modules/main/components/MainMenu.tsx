@@ -6,7 +6,7 @@ import AppRoutes from "../../../core/AppRoutes";
 export function MainMenu(): JSX.Element {
     const location = useLocation();
     const styles = {
-        height: '99vh',
+        height: '98vh'
     };
 
     function getItemPath(route : string) : boolean {
@@ -26,13 +26,12 @@ export function MainMenu(): JSX.Element {
 
     const groups : IDefaultMenuGroup[] = [
         {label: "Расписание", items: [
-                {isActive: getItemPath(AppRoutes.ScheduleView), name: 'Просмотр', link: AppRoutes.Base+AppRoutes.ScheduleView},
-                {isActive: getItemPath(AppRoutes.ScheduleAdd), name: 'Добавление', link: AppRoutes.Base+AppRoutes.ScheduleAdd},
+                {isActive: getItemPath(AppRoutes.ScheduleView), name: 'Работа с расписанием', link: AppRoutes.Base+AppRoutes.ScheduleView},
             ]},
         {label: "Пользователь", items: [
                 {isActive: getItemPath(AppRoutes.Logout), name: 'Выйти', link: AppRoutes.Base+AppRoutes.Logout},
             ]},
     ];
 
-    return (<DefaultMenu groups={groups} styles={styles} />)
+    return (<DefaultMenu groups={groups} styles={styles} classes={['box', 'box-app', 'm-2']} />)
 }
