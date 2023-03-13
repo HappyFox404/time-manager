@@ -16,7 +16,7 @@ export default class TokenLocalStorage implements ITokenStorage {
         if (localStorage.getItem(this._userToken) !== null &&
             localStorage.getItem(this._userRefreshToken) !== null &&
             localStorage.getItem(this._userIsAuthorization) != null) {
-            const isAuthorization : boolean = Boolean(localStorage.getItem(this._userIsAuthorization));
+            const isAuthorization : boolean = localStorage.getItem(this._userIsAuthorization) === 'true' ? true : false;
 
             const userData : ITokenData = {
                 token: localStorage.getItem(this._userToken) ?? '',

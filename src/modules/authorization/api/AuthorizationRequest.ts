@@ -2,8 +2,8 @@ import axios from "axios";
 import { RouteBuilder } from "../../../core/RouteBuilder";
 import {NavigateFunction} from "react-router-dom";
 import {Dispatch} from "redux";
-import {getDataApiResponse, getResponseApi, isResponseError, isResponseSuccess} from "../../../core/ResponseHelper";
 import UserStoreActions from "../models/UserStoreActions";
+import {ApiResponse} from "../../../core/ResponseHelper";
 const userLoginMethod: string = 'user/authorization';
 
 export interface AuthorizationResponse {
@@ -22,20 +22,18 @@ export function AuthorizationRequest(userName: string,
             password
         }
     }).then((res : any) => {
-        const resposne = getResponseApi<AuthorizationResponse>(res.data);
-        if(isResponseSuccess<AuthorizationResponse>(resposne)){
-            const responseData = getDataApiResponse<AuthorizationResponse>(res.data);
-            if(responseData !== null) {
+        const resposne = res.data as ApiResponse<AuthorizationResponse>;
+        if(resposne.statusCode === 200){
+            if(resposne.data !== null) {
                 dispatch({type: UserStoreActions.Authorize, data:{
-                        token: responseData?.data?.token ?? '',
-                        refreshToken: responseData?.data?.refreshToken ?? '',
+                        token: resposne.data?.token ?? '',
+                        refreshToken: resposne.data?.refreshToken ?? '',
                         isAuthorization: true
                     }});
             }
         }
-        if(isResponseError<AuthorizationResponse>(resposne)){
-            const responseData = getDataApiResponse<AuthorizationResponse>(res.data);
-            addError(responseData?.message ?? 'Произошла непредвиденная ошибка');
+        if(resposne.statusCode === 400){
+            addError(resposne?.message ?? 'Произошла непредвиденная ошибка');
         }
     })
     .catch((err : any) => {
