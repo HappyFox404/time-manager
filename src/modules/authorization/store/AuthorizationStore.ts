@@ -1,9 +1,9 @@
 import IAuthorizationState from "../models/IUserState";
-import LocalTokenStorage from "../models/LocalTokenStorage"
+import LocalTokenStorage from "../../../core/token/LocalTokenStorage"
 import UserStoreActions from "../models/UserStoreActions";
 import IUserState from "../models/IUserState";
-import ITokenData from "../models/ITokenData";
-import TokenLocalStorage from "../models/LocalTokenStorage";
+import ITokenData from "../../../core/token/ITokenData";
+import TokenLocalStorage from "../../../core/token/LocalTokenStorage";
 import {legacy_createStore as createStore} from "redux";
 
 export interface IStoreAction{

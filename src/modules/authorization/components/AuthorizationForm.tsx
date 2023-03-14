@@ -62,7 +62,6 @@ export function AuthorizationForm(): JSX.Element {
         navigate(AppRoutes.Registration);
     }
 
-    console.log(generalError);
     return (
         <Form classes={['box', 'is-narrow', 'mx-auto']} styles={styles}
               handleSubmit={handleAuthorizationSubmit}>

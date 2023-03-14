@@ -16,7 +16,7 @@ interface RouteMapItem {
     isNoWorkAuthorize?:boolean;
 }
 
-function RoutesMap() {
+function RoutesMap() : JSX.Element {
     const tokenData = useSelector((state : IUserState) => state.tokenData);
 
     const defaultMap : () => JSX.Element = () => {

@@ -3,7 +3,7 @@ import { RouteBuilder } from "../../../core/RouteBuilder";
 import {NavigateFunction} from "react-router-dom";
 import {Dispatch} from "redux";
 import UserStoreActions from "../models/UserStoreActions";
-import {ApiResponse} from "../../../core/ResponseHelper";
+import {ApiResponse, RequestApi} from "../../../core/ResponseHelper";
 const userLoginMethod: string = 'user/authorization';
 
 export interface AuthorizationResponse {
@@ -16,28 +16,24 @@ export function AuthorizationRequest(userName: string,
                                      navigate : NavigateFunction,
                                      dispatch : Dispatch,
                                      addError : (value : string) => void) : void {
-    axios.get(RouteBuilder.CreateRoute(userLoginMethod), {
-        params: {
-            userName,
-            password
-        }
-    }).then((res : any) => {
-        const resposne = res.data as ApiResponse<AuthorizationResponse>;
-        if(resposne.statusCode === 200){
-            if(resposne.data !== null) {
+
+    const processing = (response : ApiResponse<AuthorizationResponse>) => {
+        if(response.statusCode === 200){
+            if(response.data !== null) {
                 dispatch({type: UserStoreActions.Authorize, data:{
-                        token: resposne.data?.token ?? '',
-                        refreshToken: resposne.data?.refreshToken ?? '',
+                        token: response.data?.token ?? '',
+                        refreshToken: response.data?.refreshToken ?? '',
                         isAuthorization: true
                     }});
             }
         }
-        if(resposne.statusCode === 400){
-            addError(resposne?.message ?? 'Произошла непредвиденная ошибка');
+        if(response.statusCode === 400){
+            addError(response?.message ?? 'Произошла непредвиденная ошибка');
         }
-    })
-    .catch((err : any) => {
-        console.error(err);
-        addError('Произошла непредвиденная ошибка');
-    });
+    }
+    const error = (ex: any) => { addError('Произошла непредвиденная ошибка'); };
+
+    RequestApi<any, AuthorizationResponse>('get',
+        RouteBuilder.CreateRoute(userLoginMethod),
+        { userName, password }, processing, error);
 }

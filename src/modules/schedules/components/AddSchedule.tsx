@@ -7,10 +7,29 @@ import FlexHorizontalContainer from "../../../ui/FlexHorizontalContainer";
 import Submit from "../../../ui/Submit";
 import DefaultDateInput from "../../../components/DefaultDateInput";
 import {AuthorizationRequest} from "../../authorization/api/AuthorizationRequest";
+import {GetStringDate} from "../../../core/DateHelper";
+import {AddScheduleRequest} from "../api/AddScheduleRequest";
+import Schedule from "../models/Schedule";
 
-export function AddSchedule(): JSX.Element {
+export interface IAddScheduleType {
+    signal(schedule: Schedule | null): void;
+}
+
+export function AddSchedule({signal} : IAddScheduleType): JSX.Element {
     const [generalError, setGeneralError] = useState<string>('');
-    const [scheduleDate, setScheduleDate] = useState<string>('');
+    const [generalSuccess, setGeneralSuccess] = useState<string>('');
+
+    const setSubmitError = (value: string) => {
+        setGeneralError(() => value);
+        setGeneralSuccess(() => '');
+    }
+    const setSubmitSuccess = (schedule: Schedule | null) => {
+        setGeneralError(() => '');
+        setGeneralSuccess(() => 'Распиание успешно добавлено');
+        if(signal){
+            signal(schedule);
+        }
+    }
 
     const handleSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
@@ -19,7 +38,7 @@ export function AddSchedule(): JSX.Element {
             scheduleDate: { value: string };
         };
         const scheduleDate: string = target.scheduleDate.value;
-        console.log(scheduleDate);
+        AddScheduleRequest(scheduleDate, setSubmitError, setSubmitSuccess);
     }
 
     return <>
@@ -29,11 +48,11 @@ export function AddSchedule(): JSX.Element {
         <Box classes={['box-app']}>
             <Form handleSubmit={handleSubmit}>
                 <Notification text={generalError} classes={['is-danger', 'is-light']}/>
+                <Notification text={generalSuccess} classes={['is-success', 'is-light']}/>
                 <DefaultDateInput
                     title='Дата расписания'
                     name='scheduleDate'
-                    handleChange={setScheduleDate}
-                    value={new Date().toISOString().split('T')[0]}/>
+                    value={GetStringDate(new Date()) ?? undefined}/>
                 <Submit title='Добавить' classes={['is-dark']}/>
             </Form>
         </Box>
