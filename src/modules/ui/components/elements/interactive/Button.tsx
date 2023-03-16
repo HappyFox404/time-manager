@@ -1,6 +1,6 @@
-import {ICommonUI} from "../../models/ICommonUI";
-import {JoinClasses} from "../../helpers/UIHelper";
-import {AdditionalElementColor, BaseElementColor} from "../../models/Colors";
+import {ICommonUI} from "../../../models/ICommonUI";
+import {JoinClasses} from "../../../helpers/UIHelper";
+import {AdditionalElementColor, BaseElementColor} from "../../../models/Colors";
 
 export enum ButtonType {
     IsLink,
@@ -33,17 +33,25 @@ export interface IButtonType extends ICommonUI{
     isInverted?:boolean;
     isRounded?:boolean;
     isStatic?:boolean;
+    isNotHover?:boolean;
+    isFocused?:boolean;
+    isActive?:boolean;
+    isLoading?:boolean;
     handleClick(): void;
 }
 
 export function Button({className, style, children, color, size, text, handleClick, type = ButtonType.IsLink,
                            isFullwidth = false, isResponsive = false, isOutlined = false,
-                           isInverted = false, isRounded = false, isStatic = false} : IButtonType) : JSX.Element {
+                           isInverted = false, isRounded = false, isStatic = false,
+                           isNotHover = false, isFocused = false, isActive = false,
+                           isLoading = false} : IButtonType) : JSX.Element {
     function needButtonElement() : JSX.Element {
         const classes = JoinClasses('button', className ?? '', color ?? '', size ?? '',
             (isFullwidth === true) ? 'is-fullwidth' : '', (isResponsive === true) ? 'is-responsive' : '',
             (isOutlined === true) ? 'is-outlined' : '', (isInverted === true) ? 'is-inverted' : '',
-            (isRounded === true) ? 'is-rounded' : '', (isStatic === true) ? 'is-static' : '');
+            (isRounded === true) ? 'is-rounded' : '', (isStatic === true) ? 'is-static' : '',
+            (isNotHover === true) ? 'is-hovered' : '', (isFocused === true) ? 'is-focused' : '',
+            (isActive === true) ? 'is-active' : '', (isLoading === true) ? 'is-loading' : '');
 
         if(type === ButtonType.IsButton){
             return <button style={style} className={classes} onClick={() => {if(handleClick) handleClick();}}>{children ?? text}</button>;
