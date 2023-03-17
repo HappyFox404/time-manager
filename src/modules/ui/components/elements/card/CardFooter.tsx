@@ -1,6 +1,6 @@
 import {ICommonUI} from "../../../models/ICommonUI";
 import {JoinClasses} from "../../../helpers/UIHelper";
-import {Button, ButtonType} from "../interactive/Button";
+import {Button, ButtonType} from "../../interactive/Button";
 
 export interface ICardFooterItem{
     content: JSX.Element | string;

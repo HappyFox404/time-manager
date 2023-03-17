@@ -11,6 +11,6 @@ export interface IButtonsType extends ICommonUI {
     size?: ButtonsSize;
 }
 
-export function Tags({className, style, children, size} : IButtonsType) : JSX.Element {
+export function Buttons({className, style, children, size} : IButtonsType) : JSX.Element {
     return <div style={style} className={JoinClasses('buttons', className ?? '', size ?? '')}>{children}</div>
 }
