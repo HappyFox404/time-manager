@@ -10,10 +10,12 @@ export interface IIconType extends ICommonUI{
     color? : BaseElementColor;
     icon: IconDefinition;
     iconSize?: SizeProp;
+    isLeft?: boolean;
+    isRight?: boolean;
 }
 
-export function Icon({className, style, icon, iconSize, color} : IIconType) : JSX.Element {
-    return <span style={style} className={JoinClasses('icon', className ?? '', color ?? '')}>
+export function Icon({className, style, icon, iconSize, color, isLeft = false, isRight = false} : IIconType) : JSX.Element {
+    return <span style={style} className={JoinClasses('icon', className ?? '', color ?? '', (isLeft) ? 'is-left' : '', (isRight) ? 'is-right' : '')}>
         {
             <FontAwesomeIcon icon={icon} size={iconSize}/>
         }

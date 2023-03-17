@@ -1,4 +1,6 @@
 export {BaseElementColor, AdditionalElementColor} from './models/Colors'
+export {FlexAlignSelfType, FlexGrow, FlexShrink} from './models/Flex'
+export {PaddingType, MarginType} from './models/Spacing'
 
 export {Columns, ColumnsGap} from "./components/containers/Columns";
 export {Column, ColumnSize} from "./components/containers/Column";
@@ -8,6 +10,7 @@ export {Tags, TagsSize} from './components/containers/Tags';
 export {Buttons, ButtonsSize} from './components/containers/Buttons'
 export {Field, FieldLabelSizeType, FieldGroupAlignType, FieldAddonAlignType} from './components/containers/Field'
 export {Fieldset} from './components/containers/Fieldset'
+export {Flex, FlexJustifyContentType, FlexAlignContentType, FlexDirectionType, FlexAlignItemsType, FlexWrapType} from './components/containers/Flex'
 
 export {Tag, TagSize} from './components/elements/Tag';
 export {Notification} from './components/elements/Notification'

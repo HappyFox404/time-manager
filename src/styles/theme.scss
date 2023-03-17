@@ -1,6 +1,28 @@
+/* Переменные цвета */
+
+$theme-dark-color: #333333;
+$theme-background-dark-element-color: #4d4d4d;
+$shadow-dark-color: #666666;
+$white-ter-transparent: hsl(0, 0%, 96%, 0.2);
+
 /* Настройки темы*/
 
 @import "../../node_modules/bulma/sass/utilities/all";
+
+$body-background-color: $theme-dark-color;
+$body-overflow-y: hidden;
+
+$box-background-color: $theme-background-dark-element-color;
+$box-shadow: 0 0 5px $shadow-dark-color;
+
+$label-color: $white;
+
+$input-background-color: transparent;
+$input-focus-box-shadow-color: $white-ter;
+$input-icon-active-color: $white;
+$input-icon-color: $white-ter;
+$input-color: $white-ter;
+$input-placeholder-color: $white-ter-transparent;
 
 /*настройка элементов*/
 

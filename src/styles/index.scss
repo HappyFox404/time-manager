@@ -1,9 +1,16 @@
 @import "theme";
 
-::-webkit-scrollbar {
-  width: 0;
+$outline-dark: #808080;
+
+.outline {
+  outline: 1px solid $outline-dark;
 }
 
-html {
+.white-link {
+  color: $white;
+}
 
+.white-link:hover {
+  color: $grey-lighter !important;
+  transition: 0.5s linear all;
 }

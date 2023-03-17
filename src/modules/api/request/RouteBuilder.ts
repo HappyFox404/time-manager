@@ -1,7 +1,7 @@
 export class RouteBuilder{
-    private static _apiAdress : string = 'http://localhost:7000/api/';
+    public static ApiAdress : string;
 
     public static CreateRoute(route: string) : string {
-        return `${this._apiAdress}${route}`;
+        return `${this.ApiAdress}${route}`;
     }
 }

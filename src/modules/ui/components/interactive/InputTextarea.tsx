@@ -40,7 +40,6 @@ export function Textarea({style, className, placeholder, value, color, rows, siz
     const [inputValue, setInputValue] = useState<string>(value ?? '');
 
     function Change(event : React.ChangeEvent<HTMLTextAreaElement>){
-        console.log(event.target.value);
         setInputValue(event.target.value);
         if(handleChange)
             handleChange(event.target.value);

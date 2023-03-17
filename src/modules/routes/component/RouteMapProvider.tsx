@@ -1,5 +1,5 @@
 import {RouteItem} from "../models/RouteItem";
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 export interface IRouteMapProvider {
     routes: RouteItem[];
@@ -8,12 +8,14 @@ export interface IRouteMapProvider {
 export function RouteMapProvider({routes} : IRouteMapProvider) : JSX.Element {
     function RouteElement(route : RouteItem, index : number) : JSX.Element {
         if(route.condition){
-            if(route.condition.condition()){
+            if(route.condition.condition() === false){
                 return <Route key={index} path={route.path} element={route.element}/>;
+            } else {
+                return <Route key={index} path={route.path} element={route.condition.element}/>;
             }
-            return <Navigate key={index} to={route.condition?.conditionPath ?? ''} replace={true}/>;
+        } else {
+            return <Route key={index} path={route.path} element={route.element}/>;
         }
-        return <Route key={index} path={route.path} element={route.element}/>;
     }
 
     return <BrowserRouter>

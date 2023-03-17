@@ -39,8 +39,7 @@ export function InputText({style, className, placeholder, value, color, size, na
                           isHovered = false, isFocused = false, isLoading = false, isDisabled = false, isReadonly = false} : IInputTextType) : JSX.Element {
     const [inputValue, setInputValue] = useState<string>(value ?? '');
 
-    function Change(event : React.ChangeEvent<HTMLInputElement>){
-        console.log(event.target.value);
+    function Change(event : React.ChangeEvent<HTMLInputElement>) : void{
         setInputValue(event.target.value);
         if(handleChange)
             handleChange(event.target.value);

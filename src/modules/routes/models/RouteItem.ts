@@ -6,5 +6,5 @@ export interface RouteItem {
 
 export interface RouteItemCondition {
     condition: () => boolean;
-    conditionPath: string;
+    element: JSX.Element;
 }

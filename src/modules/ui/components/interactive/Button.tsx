@@ -37,7 +37,7 @@ export interface IButtonType extends ICommonUI{
     isFocused?:boolean;
     isActive?:boolean;
     isLoading?:boolean;
-    handleClick(): void;
+    handleClick?: () => void;
 }
 
 export function Button({className, style, children, color, size, text, handleClick, type = ButtonType.IsLink,
@@ -45,6 +45,12 @@ export function Button({className, style, children, color, size, text, handleCli
                            isInverted = false, isRounded = false, isStatic = false,
                            isNotHover = false, isFocused = false, isActive = false,
                            isLoading = false} : IButtonType) : JSX.Element {
+
+    function buttonHandleClick(){
+        if(handleClick)
+            handleClick();
+    }
+
     function needButtonElement() : JSX.Element {
         const classes = JoinClasses('button', className ?? '', color ?? '', size ?? '',
             (isFullwidth === true) ? 'is-fullwidth' : '', (isResponsive === true) ? 'is-responsive' : '',
@@ -54,19 +60,19 @@ export function Button({className, style, children, color, size, text, handleCli
             (isActive === true) ? 'is-active' : '', (isLoading === true) ? 'is-loading' : '');
 
         if(type === ButtonType.IsButton){
-            return <button style={style} className={classes} onClick={() => {if(handleClick) handleClick();}}>{children ?? text}</button>;
+            return <button style={style} className={classes} onClick={buttonHandleClick}>{children ?? text}</button>;
         }
         if(type === ButtonType.IsSubmit){
-            return <input style={style} className={classes} type='submit' onClick={() => {if(handleClick) handleClick();}} value={text ?? ''}/>;
+            return <input style={style} className={classes} type='submit' onClick={buttonHandleClick} value={text ?? ''}/>;
         }
         if(type === ButtonType.IsReset){
-            return <input style={style} className={classes} type='reset' onClick={() => {if(handleClick) handleClick();}} value={text ?? ''}/>;
+            return <input style={style} className={classes} type='reset' onClick={buttonHandleClick} value={text ?? ''}/>;
         }
         if(type === ButtonType.IsClickableContainer){
-            return <div style={style} className={classes} onClick={() => {if(handleClick) handleClick();}}>{children ?? text}</div>;
+            return <div style={style} className={classes} onClick={buttonHandleClick}>{children ?? text}</div>;
         }
 
-        return <a style={style} className={classes} onClick={() => {if(handleClick) handleClick();}}>{children ?? text}</a>;
+        return <a style={style} className={classes} onClick={buttonHandleClick}>{children ?? text}</a>;
     }
 
     return (needButtonElement());
