@@ -64,6 +64,7 @@ export function RequestApiWithAuthentication<TParameters,TResponseData>(method :
                     { refreshToken: tokenData?.refreshToken }, processingAuth, errorAuth);
             } else if(ex?.response?.status === 401 && trying === true){
                 clearAuthorization();
+                window.location.reload();
             } else {
                 if(error){
                     error(ex);
