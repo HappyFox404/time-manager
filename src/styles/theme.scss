@@ -10,6 +10,7 @@ $white-ter-transparent: hsl(0, 0%, 96%, 0.2);
 @import "../../node_modules/bulma/sass/utilities/all";
 
 $body-background-color: $theme-dark-color;
+$body-color: $white;
 $body-overflow-y: hidden;
 
 $box-background-color: $theme-background-dark-element-color;
@@ -23,6 +24,9 @@ $input-icon-active-color: $white;
 $input-icon-color: $white-ter;
 $input-color: $white-ter;
 $input-placeholder-color: $white-ter-transparent;
+
+$title-color: $white;
+$title-color: $white;
 
 /*настройка элементов*/
 

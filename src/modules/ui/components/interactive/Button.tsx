@@ -37,6 +37,7 @@ export interface IButtonType extends ICommonUI{
     isFocused?:boolean;
     isActive?:boolean;
     isLoading?:boolean;
+    isEmpty?:boolean;
     handleClick?: () => void;
 }
 
@@ -44,7 +45,7 @@ export function Button({className, style, children, color, size, text, handleCli
                            isFullwidth = false, isResponsive = false, isOutlined = false,
                            isInverted = false, isRounded = false, isStatic = false,
                            isNotHover = false, isFocused = false, isActive = false,
-                           isLoading = false} : IButtonType) : JSX.Element {
+                           isLoading = false, isEmpty = false} : IButtonType) : JSX.Element {
 
     function buttonHandleClick(){
         if(handleClick)
@@ -69,10 +70,10 @@ export function Button({className, style, children, color, size, text, handleCli
             return <input style={style} className={classes} type='reset' onClick={buttonHandleClick} value={text ?? ''}/>;
         }
         if(type === ButtonType.IsClickableContainer){
-            return <div style={style} className={classes} onClick={buttonHandleClick}>{children ?? text}</div>;
+            return <div style={style} className={(isEmpty == false) ? classes : className} onClick={buttonHandleClick}>{children ?? text}</div>;
         }
 
-        return <a style={style} className={classes} onClick={buttonHandleClick}>{children ?? text}</a>;
+        return <a style={style} className={(isEmpty == false) ? classes : className} onClick={buttonHandleClick}>{children ?? text}</a>;
     }
 
     return (needButtonElement());
