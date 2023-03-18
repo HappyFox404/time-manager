@@ -17,31 +17,36 @@ import {
     PaddingType
 } from "../../ui";
 import {Link, useNavigate} from "react-router-dom";
-import {faKey, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faEnvelope, faKey, faUser} from "@fortawesome/free-solid-svg-icons";
 import {AppRoutes} from "../../../constants/AppRoutes";
 import {JoinClasses} from "../../ui/helpers/UIHelper";
 import {useState} from "react";
-import {AuthorizationRequest} from "../api/AuthorizationRequest";
-import {RegistrationRequest} from "../../registration/api/RegistrationRequest";
+import {RegistrationRequest} from "../api/RegistrationRequest";
 
 interface FormData{
     userName: {value : string};
     userPassword: {value : string};
+    userConfirmPassword: {value : string};
+    userEmail: {value: string};
 }
 
-export function AuthorizationForm() : JSX.Element {
+export function RegistrationForm() : JSX.Element {
     const navigate = useNavigate();
 
     const [error, setError] = useState<string>('');
     const [isRequest, setIsRequest] = useState<boolean>(false);
 
     function validate(data: FormData) : boolean {
+        if(data.userEmail.value.length === 0){
+            setError("Email обязателен");
+            return false;
+        }
         if(data.userName.value.length === 0){
             setError("Имя пользователя обязателено");
             return false;
         }
-        if(data.userPassword.value.length === 0){
-            setError("Пароль не может быть пустым");
+        if(data.userPassword.value !== data.userConfirmPassword.value){
+            setError("Пароли не совпадают");
             return false;
         }
 
@@ -55,7 +60,7 @@ export function AuthorizationForm() : JSX.Element {
 
         const promise = new Promise((resolve, reject) => {
             setIsRequest(() => true);
-            AuthorizationRequest(data.userName.value, data.userPassword.value, resolve, reject);
+            RegistrationRequest(data.userName.value, data.userPassword.value, data.userEmail.value, resolve, reject);
         });
 
         promise.then(() => {
@@ -65,7 +70,6 @@ export function AuthorizationForm() : JSX.Element {
             setIsRequest(() => false);
             setError(() => message);
         });
-
     }
 
     function hasError() : JSX.Element {
@@ -77,21 +81,29 @@ export function AuthorizationForm() : JSX.Element {
         <Box className={JoinClasses('outline')}>
             <Fieldset isDisabled={isRequest}>
                 { hasError() }
-                { hasError() }
                 <Field>
                     <Label>Имя пользователя</Label>
                     <InputText leftIcon={<Icon icon={faUser} isLeft/>}
                                name='userName' placeholder='Введите имя пользователя'/>
                 </Field>
                 <Field>
+                    <Label>Email</Label>
+                    <InputText leftIcon={<Icon icon={faEnvelope} isLeft/>} type={InputTextType.isEmail}
+                               name='userEmail' placeholder='Введите почту пользователя'/>
+                </Field>
+                <Field>
                     <Label>Пароль</Label>
                     <InputText leftIcon={<Icon icon={faKey} isLeft/>} type={InputTextType.IsPassword} name='userPassword' placeholder='Введите пароль'/>
                 </Field>
+                <Field>
+                    <Label>Подтвердите пароль</Label>
+                    <InputText leftIcon={<Icon icon={faKey} isLeft/>} type={InputTextType.IsPassword} name='userConfirmPassword' placeholder='Повторите пароль'/>
+                </Field>
                 <Field className={MarginType.MY2}>
-                    <Link className={JoinClasses(PaddingType.PX0, 'white-link')}  to={AppRoutes.Registration}>Нет учётной записи?</Link>
+                    <Link className={JoinClasses(PaddingType.PX0, 'white-link')}  to={AppRoutes.Authorization}>У меня уже есть учётная запись</Link>
                 </Field>
                 <Buttons>
-                    <Button type={ButtonType.IsSubmit} text='Войти' color={AdditionalElementColor.White} isOutlined/>
+                    <Button type={ButtonType.IsSubmit} text='Войти' color={AdditionalElementColor.White} isOutlined />
                 </Buttons>
             </Fieldset>
         </Box>

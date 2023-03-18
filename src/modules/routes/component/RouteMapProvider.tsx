@@ -1,5 +1,5 @@
 import {RouteItem} from "../models/RouteItem";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 
 export interface IRouteMapProvider {
     routes: RouteItem[];

@@ -1,3 +1,4 @@
 export enum AppRequest{
-    Authorization = 'user/authorization'
+    Authorization = 'user/authorization',
+    Registration = 'user/register',
 }

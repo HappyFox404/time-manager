@@ -2,17 +2,18 @@ import {LocalStorageToken, RequestApi, RouteBuilder} from "../../api";
 import {ApiResponse} from "../../api/request/Request";
 import {AppRequest} from "../../../constants/AppRequest";
 
-export interface AuthorizationResponse {
+export interface RegistrationResponse {
     token: string;
     refreshToken: string;
 }
 
-export function AuthorizationRequest(userName: string,
+export function RegistrationRequest(userName: string,
                                      password: string,
+                                     email: string,
                                      resolve : any,
-                                     reject: any) : void {
+                                     reject : any) : void {
 
-    const processing = (response : ApiResponse<AuthorizationResponse>) => {
+    const processing = (response : ApiResponse<RegistrationResponse>) => {
         if(response.statusCode === 200){
             if(response.data !== null) {
                 const token = new LocalStorageToken();
@@ -30,7 +31,7 @@ export function AuthorizationRequest(userName: string,
     }
     const error = (ex: any) => { reject('Произошла непредвиденная ошибка'); };
 
-    RequestApi<any, AuthorizationResponse>('get',
-        RouteBuilder.CreateRoute(AppRequest.Authorization),
-        { userName, password }, processing, error);
+    RequestApi<any, RegistrationResponse>('post',
+        RouteBuilder.CreateRoute(AppRequest.Registration),
+        { userName, password, email }, processing, error);
 }
