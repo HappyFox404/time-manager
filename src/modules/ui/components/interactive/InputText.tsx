@@ -14,7 +14,9 @@ export enum InputTextType {
     IsText = 'text',
     IsPassword = 'password',
     isEmail = 'email',
-    isTel = 'tel'
+    isTel = 'tel',
+    Date = 'date',
+    DateTime = 'datetime'
 }
 
 export interface IInputTextType extends ICommonUI {

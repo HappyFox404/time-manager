@@ -1,6 +1,7 @@
 export {BaseElementColor, AdditionalElementColor} from './models/Colors'
 export {FlexAlignSelfType, FlexGrow, FlexShrink} from './models/Flex'
 export {PaddingType, MarginType} from './models/Spacing'
+export {VisibleType} from './models/Visible'
 
 export {Columns, ColumnsGap} from "./components/containers/Columns";
 export {Column, ColumnSize} from "./components/containers/Column";
@@ -20,6 +21,7 @@ export {Title} from './components/elements/Title'
 export {Table} from './components/elements/Table'
 export {Label} from './components/elements/Label'
 export {Help} from './components/elements/Help'
+export {Line} from './components/elements/Line'
 
 export {Breadcrumb, BreadcrumbSeparatorType, BreadcrumbSizeType} from './components/elements/Breadcrumb'
 export {Card} from './components/elements/card/Card'

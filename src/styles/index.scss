@@ -2,6 +2,10 @@
 
 $outline-dark: #808080;
 
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
 .outline {
   outline: 1px solid $outline-dark;
 }
@@ -24,6 +28,24 @@ $outline-dark: #808080;
 }
 
 .app-menu-item:hover {
+  color: $black;
+  background-color: $white;
+  transition: 0.2s linear all;
+}
+
+.line{
+  color: $white;
+}
+
+.schedule-item{
+  color: $white;
+  padding: 5px 0 5px 5px;
+  margin: 5px 0;
+  border-left: 2px solid $white;
+  border-right: 2px solid $white;
+  cursor: pointer;
+}
+.schedule-item:hover{
   color: $black;
   background-color: $white;
   transition: 0.2s linear all;

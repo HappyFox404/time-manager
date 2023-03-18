@@ -1,5 +1,5 @@
 import {RouteItem} from "../modules/routes/models/RouteItem";
-import MainPage from "../pages/MainPage";
+import SchedulesPage from "../pages/SchedulesPage";
 import {AppRoutes} from "../constants/AppRoutes";
 import {LocalStorageToken} from "../modules/api";
 import AuthorizationPage from "../pages/AuthorizationPage";
@@ -7,8 +7,8 @@ import RegistrationPage from "../pages/RegistrationPage";
 
 const ApplicationRouteMap : RouteItem[] = [
     {
-        element : <MainPage/>,
-        path: AppRoutes.Main,
+        element : <SchedulesPage/>,
+        path: AppRoutes.Schedules,
         condition: {
             condition: () => {
                 const tokenProvider = new LocalStorageToken();
@@ -25,7 +25,7 @@ const ApplicationRouteMap : RouteItem[] = [
                 const tokenProvider = new LocalStorageToken();
                 return (tokenProvider.GetStorage()?.isAuthorization ?? false) === true;
             },
-            element: <MainPage/>
+            element: <SchedulesPage/>
         }
     },
     {
@@ -36,11 +36,11 @@ const ApplicationRouteMap : RouteItem[] = [
                 const tokenProvider = new LocalStorageToken();
                 return (tokenProvider.GetStorage()?.isAuthorization ?? false) === true;
             },
-            element: <MainPage/>
+            element: <SchedulesPage/>
         }
     },
     {
-        element : <MainPage/>,
+        element : <SchedulesPage/>,
         path: '*',
         condition: {
             condition: () => {

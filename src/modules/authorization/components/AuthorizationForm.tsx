@@ -77,7 +77,6 @@ export function AuthorizationForm() : JSX.Element {
         <Box className={JoinClasses('outline')}>
             <Fieldset isDisabled={isRequest}>
                 { hasError() }
-                { hasError() }
                 <Field>
                     <Label>Имя пользователя</Label>
                     <InputText leftIcon={<Icon icon={faUser} isLeft/>}
