@@ -2,6 +2,7 @@ export {BaseElementColor, AdditionalElementColor} from './models/Colors'
 export {FlexAlignSelfType, FlexGrow, FlexShrink} from './models/Flex'
 export {PaddingType, MarginType} from './models/Spacing'
 export {VisibleType} from './models/Visible'
+export {TooltipType, TooltipColorType} from './models/TooltipType'
 
 export {Columns, ColumnsGap} from "./components/containers/Columns";
 export {Column, ColumnSize} from "./components/containers/Column";

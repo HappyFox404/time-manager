@@ -46,8 +46,8 @@ export function RequestApiWithAuthentication<TParameters,TResponseData>(method :
     axios({
         method: method,
         url: url,
-        data: (method !== 'get') ? params : null,
-        params: (method === 'get') ? params : null,
+        data: (method !== 'get' && method !== 'delete') ? params : null,
+        params: (method === 'get' || method === 'delete') ? params : null,
         headers: {
             Authorization: 'Bearer ' + tokenData?.token
         }
@@ -86,8 +86,8 @@ export function RequestApi<TParameters,TResponseData>(method : string,
     axios({
         method: method,
         url: url,
-        data: (method !== 'get') ? params : null,
-        params: (method === 'get') ? params : null
+        data: (method !== 'get' && method !== 'delete') ? params : null,
+        params: (method === 'get' || method === 'delete') ? params : null,
     }).then((res : any) => {
         const response = res.data as ApiResponse<TResponseData>;
         if(processing) {

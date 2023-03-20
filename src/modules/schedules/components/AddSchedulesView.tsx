@@ -9,12 +9,13 @@ import {
     Icon,
     InputText,
     InputTextType,
-    Label, Line, MarginType, Notification, PaddingType, Title
+    Label, Line, MarginType, Notification, PaddingType, Title, TooltipType
 } from "../../ui";
 import {GetStringDate} from "../../helpers";
 import {AddSchedulesRequest} from "../api/AddSchedulesRequest";
 import {TitleSizeType} from "../../ui/components/elements/Title";
 import {faCircleXmark} from "@fortawesome/free-solid-svg-icons";
+import {JoinClasses} from "../../ui/helpers/UIHelper";
 
 export interface IAddSchedulesViewType {
     closeAddView: () => void;
@@ -64,7 +65,8 @@ export function AddSchedulesView({closeAddView, updateSignal} : IAddSchedulesVie
         <Flex justifyContent={FlexJustifyContentType.SpaceBetween} alignItems={FlexAlignItemsType.Center}>
             <div><Title text={'Добавление расписания'} size={TitleSizeType.IS5}/></div>
             <div>
-                <Button type={ButtonType.IsClickableContainer} color={AdditionalElementColor.White} className={PaddingType.P3} handleClick={closeAddView}>
+                <Button type={ButtonType.IsClickableContainer} color={AdditionalElementColor.White} tooltip={'Закрыть панель'}
+                        className={JoinClasses(PaddingType.P0, TooltipType.PositionLeft)} style={{width: '30px', height: '30px'}} handleClick={closeAddView}>
                     <Icon icon={faCircleXmark}/>
                 </Button>
             </div>
