@@ -1,16 +1,19 @@
 import {
+    AdditionalElementColor,
     BaseElementColor,
     Button,
+    ButtonColor,
     ButtonType,
     Flex,
     FlexAlignItemsType,
     FlexJustifyContentType,
     Icon,
     MarginType,
-    PaddingType, TooltipType
+    PaddingType,
+    TooltipType
 } from "../../ui";
 import {GetFormatStringDateToNormallize} from "../../helpers";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faFilePen, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {JoinClasses} from "../../ui/helpers/UIHelper";
 import {DeleteSchedulesRequest} from "../api/DeleteSchedulesRequest";
 import {toast} from "bulma-toast";
@@ -20,9 +23,10 @@ export interface ISchedulesViewItemType {
     dateCreated: string;
     day: string;
     updateSignal: (signal: string) => void;
+    editSignal?: () => void;
 }
 
-export function SchedulesViewItem({id, day, dateCreated, updateSignal} : ISchedulesViewItemType) : JSX.Element {
+export function SchedulesViewItem({id, day, dateCreated, updateSignal, editSignal} : ISchedulesViewItemType) : JSX.Element {
     function DeleteSchedule() {
         const promise = new Promise((resolve, reject) => {
             DeleteSchedulesRequest(id, resolve, reject);
@@ -49,9 +53,14 @@ export function SchedulesViewItem({id, day, dateCreated, updateSignal} : ISchedu
         });
     }
 
-    return <Flex alignItems={FlexAlignItemsType.Center} justifyContent={FlexJustifyContentType.SpaceBetween} className={'schedule-item'}>
+    return <Flex alignItems={FlexAlignItemsType.Center} justifyContent={FlexJustifyContentType.SpaceBetween}
+                 className={'schedule-item'}>
         <span>{GetFormatStringDateToNormallize(day)}</span>
         <Flex alignItems={FlexAlignItemsType.Center}>
+            <Button type={ButtonType.IsClickableContainer} color={AdditionalElementColor.White} tooltip={'Редактировать расписание'} handleClick={editSignal}
+                    className={JoinClasses(PaddingType.P0, MarginType.MR2, TooltipType.PositionLeft)} style={{width: '25px', height: '25px'}}>
+                <Icon icon={faFilePen} iconSize={"sm"}/>
+            </Button>
             <Button type={ButtonType.IsClickableContainer} color={BaseElementColor.Danger} tooltip={'Удалить расписание'} handleClick={DeleteSchedule}
                     className={JoinClasses(PaddingType.P0, MarginType.MR2, TooltipType.PositionLeft)} style={{width: '25px', height: '25px'}}>
                 <Icon icon={faTrash} iconSize={"sm"}/>
