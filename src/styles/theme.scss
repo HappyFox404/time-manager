@@ -7,6 +7,8 @@ $white-ter-transparent: hsl(0, 0%, 96%, 0.2);
 
 /* Настройки темы*/
 
+$red: #7B001C;
+
 @import "../../node_modules/bulma/sass/utilities/all";
 
 $body-background-color: $theme-dark-color;
@@ -36,3 +38,5 @@ $title-color: $white;
 @import "../../node_modules/bulma/sass/grid/all";
 @import "../../node_modules/bulma/sass/helpers/all";
 @import "../../node_modules/bulma/sass/layout/all";
+
+@import "../../node_modules/bulma-tooltip/src/sass/index";

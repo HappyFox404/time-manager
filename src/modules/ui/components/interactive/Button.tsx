@@ -41,7 +41,7 @@ export interface IButtonType extends ICommonUI{
     handleClick?: () => void;
 }
 
-export function Button({className, style, children, color, size, text, handleClick, type = ButtonType.IsLink,
+export function Button({className, style, children, color, size, text, tooltip, handleClick, type = ButtonType.IsLink,
                            isFullwidth = false, isResponsive = false, isOutlined = false,
                            isInverted = false, isRounded = false, isStatic = false,
                            isNotHover = false, isFocused = false, isActive = false,
@@ -61,19 +61,19 @@ export function Button({className, style, children, color, size, text, handleCli
             (isActive === true) ? 'is-active' : '', (isLoading === true) ? 'is-loading' : '');
 
         if(type === ButtonType.IsButton){
-            return <button style={style} className={classes} onClick={buttonHandleClick}>{children ?? text}</button>;
+            return <button style={style} className={classes} onClick={buttonHandleClick} data-tooltip={tooltip}>{children ?? text}</button>;
         }
         if(type === ButtonType.IsSubmit){
-            return <input style={style} className={classes} type='submit' onClick={buttonHandleClick} value={text ?? ''}/>;
+            return <input style={style} className={classes} type='submit' onClick={buttonHandleClick} value={text ?? ''} data-tooltip={tooltip}/>;
         }
         if(type === ButtonType.IsReset){
-            return <input style={style} className={classes} type='reset' onClick={buttonHandleClick} value={text ?? ''}/>;
+            return <input style={style} className={classes} type='reset' onClick={buttonHandleClick} value={text ?? ''} data-tooltip={tooltip}/>;
         }
         if(type === ButtonType.IsClickableContainer){
-            return <div style={style} className={(isEmpty == false) ? classes : className} onClick={buttonHandleClick}>{children ?? text}</div>;
+            return <div style={style} className={(isEmpty === false) ? classes : className} onClick={buttonHandleClick} data-tooltip={tooltip}>{children ?? text}</div>;
         }
 
-        return <a style={style} className={(isEmpty == false) ? classes : className} onClick={buttonHandleClick}>{children ?? text}</a>;
+        return <a style={style} className={(isEmpty == false) ? classes : className} onClick={buttonHandleClick} data-tooltip={tooltip}>{children ?? text}</a>;
     }
 
     return (needButtonElement());

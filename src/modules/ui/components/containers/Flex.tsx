@@ -60,7 +60,7 @@ export interface IFlexType extends ICommonUI {
     alignItems?: FlexAlignItemsType;
 }
 
-export function Flex({className, style, children, direction, wrap, justifyContent, alignContent, alignItems} : IFlexType) : JSX.Element {
+export function Flex({className, style, children, direction, tooltip, wrap, justifyContent, alignContent, alignItems} : IFlexType) : JSX.Element {
     return <div style={style} className={JoinClasses('is-flex', className ?? '', direction ?? '',
-        wrap ?? '', justifyContent ?? '', alignContent ?? '', alignItems ?? '')}>{children}</div>
+        wrap ?? '', justifyContent ?? '', alignContent ?? '', alignItems ?? '')} data-tooltip={tooltip}>{children}</div>
 }
