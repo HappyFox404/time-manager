@@ -70,7 +70,7 @@ export function Button({className, style, children, color, size, text, tooltip, 
             return <input style={style} className={classes} type='reset' onClick={buttonHandleClick} value={text ?? ''} data-tooltip={tooltip}/>;
         }
         if(type === ButtonType.IsClickableContainer){
-            return <div style={style} className={(isEmpty == false) ? classes : className} onClick={buttonHandleClick} data-tooltip={tooltip}>{children ?? text}</div>;
+            return <div style={style} className={(isEmpty === false) ? classes : className} onClick={buttonHandleClick} data-tooltip={tooltip}>{children ?? text}</div>;
         }
 
         return <a style={style} className={(isEmpty == false) ? classes : className} onClick={buttonHandleClick} data-tooltip={tooltip}>{children ?? text}</a>;

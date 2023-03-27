@@ -23,10 +23,11 @@ import {JoinClasses} from "../../ui/helpers/UIHelper";
 
 export interface IScheduleViewType {
     openAddView: () => void;
+    openEditView: (schedule: Schedule) => void;
     signal?: string;
 }
 
-export function SchedulesView({openAddView, signal = ''} : IScheduleViewType) : JSX.Element{
+export function SchedulesView({openAddView, openEditView, signal = ''} : IScheduleViewType) : JSX.Element{
     const [signalTimestamp, setSignalTimestamp] = useState<string>(signal);
     const [schedules, setSchedules] = useState<Schedule[]>([]);
     const [error, setError] = useState<string>('');
@@ -34,9 +35,13 @@ export function SchedulesView({openAddView, signal = ''} : IScheduleViewType) : 
 
     useEffect(() => {
         RequestData();
-    }, [signalTimestamp]);
+    }, [signalTimestamp, signal]);
 
-    function UpdateSignal(signal: string){ setSignalTimestamp(() => signal);}
+    function UpdateSignal(signal: string) : void{ setSignalTimestamp(() => signal);}
+    function EditSchedule(schedule: Schedule) : void{
+        if(openEditView)
+            openEditView(schedule);
+    }
 
     function RequestData() : void {
         const promise = new Promise((resolve, reject) => {
@@ -60,7 +65,8 @@ export function SchedulesView({openAddView, signal = ''} : IScheduleViewType) : 
             if(schedules.length > 0) {
                 return (<>{
                     schedules.map((item, index) => {
-                        return <SchedulesViewItem key={index} id={item.id} dateCreated={item.dateCreated} day={item.day} updateSignal={UpdateSignal}/>
+                        return <SchedulesViewItem key={index} id={item.id} dateCreated={item.dateCreated} day={item.day}
+                                                  updateSignal={UpdateSignal} editSignal={() => {EditSchedule(item);}}/>
                     })
                 }</>);
             } else {

@@ -3,6 +3,8 @@ import {AppMenu} from "../modules/menu";
 import {JoinClasses} from "../modules/ui/helpers/UIHelper";
 import {useState} from "react";
 import {AddSchedulesView, SchedulesView} from "../modules/schedules";
+import {Schedule} from "../modules/schedules/models/Schedule";
+import {EditSchedulesView} from "../modules/schedules/components/EditSchedulesView";
 
 enum SchedulesPageMode {
     None,
@@ -12,15 +14,23 @@ enum SchedulesPageMode {
 
 export default function SchedulesPage() : JSX.Element{
     const [mode, setMode] = useState<SchedulesPageMode>(SchedulesPageMode.None);
+    const [currentSchedule, setCurrentSchedule] = useState<Schedule>({id: '', day: '', userId: '', dateCreated: ''});
     const [signal, setSignal] = useState<string>('');
 
     function openScheduleView() {setMode(() => SchedulesPageMode.Add)}
+    function editScheduleView(schedule: Schedule) {
+        setCurrentSchedule(() => schedule);
+        setMode(() => SchedulesPageMode.Edit);
+    }
     function closeAllView() {setMode(() => SchedulesPageMode.None)}
     function updateSchedulesView(signal : string) {setSignal(() => signal);}
 
     function RenderSchedulesActionView() : JSX.Element | undefined {
         if(mode === SchedulesPageMode.Add){
             return <AddSchedulesView closeAddView={closeAllView} updateSignal={updateSchedulesView}/>
+        }
+        if(mode === SchedulesPageMode.Edit){
+            return <EditSchedulesView closeAddView={closeAllView} updateSignal={updateSchedulesView} schedule={currentSchedule}/>
         }
         return undefined;
     }
@@ -33,7 +43,7 @@ export default function SchedulesPage() : JSX.Element{
         </Column>
         <Column className={JoinClasses(MarginType.ML0, PaddingType.PX1, (mode === SchedulesPageMode.None) ? MarginType.MR3 : '')}>
             <Box className={JoinClasses('outline', MarginType.MY2)}>
-                <SchedulesView openAddView={openScheduleView} signal={signal}/>
+                <SchedulesView openAddView={openScheduleView} openEditView={editScheduleView} signal={signal}/>
             </Box>
         </Column>
         <Column className={JoinClasses(MarginType.ML0, MarginType.MR3, PaddingType.PX1, (mode === SchedulesPageMode.None) ? VisibleType.IsHidden : '')}>

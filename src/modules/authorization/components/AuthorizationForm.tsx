@@ -22,7 +22,6 @@ import {AppRoutes} from "../../../constants/AppRoutes";
 import {JoinClasses} from "../../ui/helpers/UIHelper";
 import {useState} from "react";
 import {AuthorizationRequest} from "../api/AuthorizationRequest";
-import {RegistrationRequest} from "../../registration/api/RegistrationRequest";
 
 interface FormData{
     userName: {value : string};
