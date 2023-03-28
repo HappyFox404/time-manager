@@ -1,9 +1,9 @@
 import {RouteItem} from "../modules/routes/models/RouteItem";
-import SchedulesPage from "../pages/SchedulesPage";
 import {AppRoutes} from "../constants/AppRoutes";
 import {LocalStorageToken} from "../modules/api";
-import AuthorizationPage from "../pages/AuthorizationPage";
-import RegistrationPage from "../pages/RegistrationPage";
+import {AuthorizationPage} from "../modules/authorization";
+import {SchedulesPage} from "../modules/schedules";
+import {RegistrationPage} from "../modules/registration";
 
 const ApplicationRouteMap : RouteItem[] = [
     {

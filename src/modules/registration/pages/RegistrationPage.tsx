@@ -7,11 +7,11 @@ import {
     FlexJustifyContentType,
     MarginType,
     PaddingType
-} from "../modules/ui";
-import {JoinClasses} from "../modules/ui/helpers/UIHelper";
-import {RegistrationForm} from "../modules/registration";
+} from "../../ui";
+import {JoinClasses} from "../../ui/helpers/UIHelper";
+import {RegistrationForm} from "../components/RegistrationForm";
 
-export default function RegistrationPage() : JSX.Element{
+export function RegistrationPage() : JSX.Element{
     return <Columns>
         <Column className={JoinClasses(PaddingType.P0, MarginType.MXA)} size={ColumnSize.P40}>
             <Flex style={{height: '100vh'}} justifyContent={FlexJustifyContentType.Center} alignItems={FlexAlignItemsType.Center}>

@@ -1,1 +1,1 @@
-export {AuthorizationForm} from './components/AuthorizationForm'
+export {AuthorizationPage} from './pages/AuthorizationPage'

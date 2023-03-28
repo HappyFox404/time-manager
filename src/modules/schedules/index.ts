@@ -1,2 +1,1 @@
-export {SchedulesView} from './components/SchedulesView'
-export {AddSchedulesView} from './components/AddSchedulesView'
+export {SchedulesPage} from './pages/SchedulesPage'

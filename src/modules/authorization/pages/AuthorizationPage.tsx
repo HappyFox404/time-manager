@@ -1,5 +1,4 @@
-import {AuthorizationForm} from "../modules/authorization";
-import {AppRequest} from "../constants/AppRequest";
+import {AppRequest} from "../../../constants/AppRequest";
 import {
     Column,
     Columns,
@@ -8,10 +7,11 @@ import {
     FlexAlignItemsType,
     FlexJustifyContentType, MarginType,
     PaddingType
-} from "../modules/ui";
-import {JoinClasses} from "../modules/ui/helpers/UIHelper";
+} from "../../ui";
+import {JoinClasses} from "../../ui/helpers/UIHelper";
+import {AuthorizationForm} from "../components/AuthorizationForm";
 //
-export default function AuthorizationPage() : JSX.Element{
+export function AuthorizationPage() : JSX.Element{
     return <Columns>
         <Column className={JoinClasses(PaddingType.P0, MarginType.MXA)} size={ColumnSize.P40}>
             <Flex style={{height: '100vh'}} justifyContent={FlexJustifyContentType.Center} alignItems={FlexAlignItemsType.Center}>
