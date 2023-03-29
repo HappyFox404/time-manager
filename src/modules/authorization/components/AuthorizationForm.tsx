@@ -14,12 +14,12 @@ import {
     Label,
     MarginType,
     Notification,
-    PaddingType
+    PaddingType,
+    JoinClasses
 } from "../../ui";
 import {Link, useNavigate} from "react-router-dom";
 import {faKey, faUser} from "@fortawesome/free-solid-svg-icons";
 import {AppRoutes} from "../../../constants/AppRoutes";
-import {JoinClasses} from "../../ui/helpers/UIHelper";
 import {useState} from "react";
 import {AuthorizationRequest} from "../api/AuthorizationRequest";
 

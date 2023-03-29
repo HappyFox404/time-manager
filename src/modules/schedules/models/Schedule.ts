@@ -4,3 +4,7 @@ export interface Schedule {
     day: string;
     userId: string;
 }
+
+const defaultState : Schedule = { id: "",dateCreated: "",day: "",userId: ""}
+
+export {defaultState}

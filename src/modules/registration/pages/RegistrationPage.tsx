@@ -4,11 +4,10 @@ import {
     ColumnSize,
     Flex,
     FlexAlignItemsType,
-    FlexJustifyContentType,
+    FlexJustifyContentType, JoinClasses,
     MarginType,
     PaddingType
 } from "../../ui";
-import {JoinClasses} from "../../ui/helpers/UIHelper";
 import {RegistrationForm} from "../components/RegistrationForm";
 
 export function RegistrationPage() : JSX.Element{

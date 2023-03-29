@@ -3,67 +3,63 @@ import {
     BaseElementColor,
     Button,
     ButtonColor,
-    ButtonType,
+    ButtonType, CreateToast,
     Flex,
     FlexAlignItemsType,
     FlexJustifyContentType,
-    Icon,
+    Icon, JoinClasses,
     MarginType,
     PaddingType,
     TooltipType
 } from "../../ui";
 import {GetFormatStringDateToNormallize} from "../../helpers";
 import {faFilePen, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {JoinClasses} from "../../ui/helpers/UIHelper";
 import {DeleteSchedulesRequest} from "../api/DeleteSchedulesRequest";
-import {toast} from "bulma-toast";
 import {Modal} from "../../ui/components/interactive/Modal";
 import {useState} from "react";
+import {useAppDispatch} from "../../../store/StoreHooks";
+import {editViewMode, noneViewMode, setCurrentSchedule, updateTimeStamp} from "../store/SchedulesViewSlice";
+import {Schedule} from "../models/Schedule";
 
 export interface ISchedulesViewItemType {
-    id: string;
-    dateCreated: string;
-    day: string;
-    updateSignal: (signal: string) => void;
-    editSignal: () => void;
+    data: Schedule;
 }
 
-export function SchedulesViewItem({id, day, dateCreated, updateSignal, editSignal} : ISchedulesViewItemType) : JSX.Element {
+export function SchedulesViewItem({data} : ISchedulesViewItemType) : JSX.Element {
+    const dispatch = useAppDispatch()
     const [isActiveModal, setIsActiveModal] = useState<boolean>(false);
     function DeleteSchedule() {
         setIsActiveModal(() => false);
 
         const promise = new Promise((resolve, reject) => {
-            DeleteSchedulesRequest(id, resolve, reject);
+            DeleteSchedulesRequest(data.id, resolve, reject);
         });
 
         promise.then(() => {
-            if(updateSignal)
-                updateSignal(new Date().getTime().toString());
-            toast({
+            dispatch(updateTimeStamp());
+            CreateToast({
                 message: 'Расписание успешно удалено!',
-                type: BaseElementColor.Success,
-                position: "bottom-right",
-                dismissible: true,
-                closeOnClick: true
-            })
+                color: BaseElementColor.Success
+            });
         }).catch(message => {
-            toast({
+            CreateToast({
                 message: message,
-                type: BaseElementColor.Danger,
-                position: "bottom-right",
-                dismissible: true,
-                closeOnClick: true
-            })
+                color: BaseElementColor.Danger
+            });
         });
+    }
+
+    function OpenEditView(){
+        dispatch(setCurrentSchedule(data));
+        dispatch(editViewMode());
     }
 
     return <>
         <Flex alignItems={FlexAlignItemsType.Center} justifyContent={FlexJustifyContentType.SpaceBetween}
               className={'schedule-item'}>
-            <span>{GetFormatStringDateToNormallize(day)}</span>
+            <span>{GetFormatStringDateToNormallize(data.day)}</span>
             <Flex alignItems={FlexAlignItemsType.Center}>
-                <Button type={ButtonType.IsClickableContainer} color={AdditionalElementColor.White} tooltip={'Редактировать расписание'} handleClick={() => {if(editSignal) editSignal();}}
+                <Button type={ButtonType.IsClickableContainer} color={AdditionalElementColor.White} tooltip={'Редактировать расписание'} handleClick={OpenEditView}
                         className={JoinClasses(PaddingType.P0, MarginType.MR2, TooltipType.PositionLeft)} style={{width: '25px', height: '25px'}}>
                     <Icon icon={faFilePen} iconSize={"sm"}/>
                 </Button>

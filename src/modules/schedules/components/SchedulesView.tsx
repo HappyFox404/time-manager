@@ -10,51 +10,31 @@ import {
     Line,
     MarginType,
     Notification,
-    PaddingType,
+    PaddingType,JoinClasses,
     Title, TooltipType
 } from "../../ui";
 import {TitleSizeType} from "../../ui/components/elements/Title";
-import {useEffect, useState} from "react";
 import {Schedule} from "../models/Schedule";
 import {SchedulesViewItem} from "./SchedulesViewItem";
-import {GetSchedulesRequest} from "../api/GetSchedulesRequest";
-import {faCalendarPlus} from "@fortawesome/free-solid-svg-icons";
-import {JoinClasses} from "../../ui/helpers/UIHelper";
+import {faArrowsRotate, faCalendarPlus} from "@fortawesome/free-solid-svg-icons";
+import {useAppDispatch} from "../../../store/StoreHooks";
+import {addViewMode, editViewMode, updateTimeStamp} from "../store/SchedulesViewSlice";
 
-export interface IScheduleViewType {
-    openAddView: () => void;
-    openEditView: (schedule: Schedule) => void;
-    signal?: string;
+export interface ISchedulesView {
+    schedules : Schedule[];
+    error : string;
+    isLoadData: boolean;
 }
 
-export function SchedulesView({openAddView, openEditView, signal = ''} : IScheduleViewType) : JSX.Element{
-    const [signalTimestamp, setSignalTimestamp] = useState<string>(signal);
-    const [schedules, setSchedules] = useState<Schedule[]>([]);
-    const [error, setError] = useState<string>('');
-    const [isLoadData, setIsLoadData] = useState<boolean>(false);
+export function SchedulesView({schedules, error, isLoadData} : ISchedulesView) : JSX.Element{
+    const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        RequestData();
-    }, [signalTimestamp, signal]);
-
-    function UpdateSignal(signal: string) : void{ setSignalTimestamp(() => signal);}
-    function EditSchedule(schedule: Schedule) : void{
-        if(openEditView)
-            openEditView(schedule);
+    function OpenAddSchedule() : void{
+        dispatch(addViewMode());
     }
 
-    function RequestData() : void {
-        const promise = new Promise((resolve, reject) => {
-            GetSchedulesRequest(100, resolve, reject);
-        });
-
-        promise.then((data) => {
-            setIsLoadData(() => true);
-            setSchedules(() => data as Schedule[]);
-        }).catch(message => {
-            setIsLoadData(() => true);
-            setError(() => message);
-        });
+    function RefreshSchedules() : void{
+        dispatch(updateTimeStamp());
     }
 
     function RenderItems() : JSX.Element {
@@ -65,8 +45,7 @@ export function SchedulesView({openAddView, openEditView, signal = ''} : ISchedu
             if(schedules.length > 0) {
                 return (<>{
                     schedules.map((item, index) => {
-                        return <SchedulesViewItem key={index} id={item.id} dateCreated={item.dateCreated} day={item.day}
-                                                  updateSignal={UpdateSignal} editSignal={() => {EditSchedule(item);}}/>
+                        return <SchedulesViewItem key={index} data={item}/>
                     })
                 }</>);
             } else {
@@ -77,11 +56,15 @@ export function SchedulesView({openAddView, openEditView, signal = ''} : ISchedu
     }
 
     return <>
-        <Flex justifyContent={FlexJustifyContentType.SpaceBetween} alignItems={FlexAlignItemsType.Center}>
+        <Flex justifyContent={FlexJustifyContentType.SpaceBetween} alignItems={FlexAlignItemsType.Center} >
             <div><Title text={'Ваше расписание'} size={TitleSizeType.IS4}/></div>
             <div>
                 <Button type={ButtonType.IsClickableContainer} color={AdditionalElementColor.White} tooltip={'Добавить расписание'}
-                        className={JoinClasses(PaddingType.P0, TooltipType.PositionLeft)} style={{width: '30px', height: '30px'}} handleClick={openAddView}>
+                        className={JoinClasses(PaddingType.P0, TooltipType.PositionLeft, MarginType.MR2)} style={{width: '30px', height: '30px'}} handleClick={RefreshSchedules}>
+                    <Icon icon={faArrowsRotate}/>
+                </Button>
+                <Button type={ButtonType.IsClickableContainer} color={AdditionalElementColor.White} tooltip={'Добавить расписание'}
+                        className={JoinClasses(PaddingType.P0, TooltipType.PositionLeft)} style={{width: '30px', height: '30px'}} handleClick={OpenAddSchedule}>
                     <Icon icon={faCalendarPlus}/>
                 </Button>
             </div>

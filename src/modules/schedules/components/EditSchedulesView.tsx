@@ -8,27 +8,26 @@ import {
     Field, Fieldset, Flex, FlexAlignItemsType, FlexJustifyContentType,
     Icon,
     InputText,
-    InputTextType,
+    InputTextType, JoinClasses,
     Label, Line, MarginType, Notification, PaddingType, Title, TooltipType
 } from "../../ui";
 import {EditSchedulesRequest} from "../api/EditSchedulesRequest";
 import {TitleSizeType} from "../../ui/components/elements/Title";
 import {faCircleXmark} from "@fortawesome/free-solid-svg-icons";
-import {JoinClasses} from "../../ui/helpers/UIHelper";
 import {Schedule} from "../models/Schedule";
 import {GetFormatStringDateToNormallize, GetStringDate} from "../../helpers";
-
-export interface IEditSchedulesViewType {
-    closeAddView: () => void;
-    updateSignal: (signal: string) => void;
-    schedule: Schedule;
-}
+import {useAppDispatch, useAppSelector} from "../../../store/StoreHooks";
+import {noneViewMode, updateTimeStamp} from "../store/SchedulesViewSlice";
 
 interface FormData{
     scheduleDate: {value : string};
 }
 
-export function EditSchedulesView({closeAddView, updateSignal, schedule} : IEditSchedulesViewType) : JSX.Element {
+export function EditSchedulesView() : JSX.Element {
+    const dispatch = useAppDispatch()
+
+    const schedule = useAppSelector(state => state.schedulesView.currentSchedule)
+
     const [error, setError] = useState<string>('');
     const [success, setSuccess] = useState<string>('');
     const [isRequest, setIsRequest] = useState<boolean>(false);
@@ -39,10 +38,9 @@ export function EditSchedulesView({closeAddView, updateSignal, schedule} : IEdit
         });
 
         promise.then(() => {
-            if(updateSignal)
-                updateSignal(new Date().getTime().toString());
-            if(closeAddView)
-                closeAddView();
+            dispatch(updateTimeStamp());
+            dispatch(noneViewMode());
+            CloseView();
             setIsRequest(() => false);
             setError(() => '');
             setSuccess(() => 'Данные успешно добавлены!');
@@ -52,6 +50,10 @@ export function EditSchedulesView({closeAddView, updateSignal, schedule} : IEdit
             setSuccess(() => '');
         });
 
+    }
+
+    function CloseView() {
+        dispatch(noneViewMode());
     }
 
     function hasError() : JSX.Element {
@@ -70,7 +72,7 @@ export function EditSchedulesView({closeAddView, updateSignal, schedule} : IEdit
             <div><Title text={`Редактирование расписания: ${GetFormatStringDateToNormallize(schedule.day)}`} size={TitleSizeType.IS5}/></div>
             <div>
                 <Button type={ButtonType.IsClickableContainer} color={AdditionalElementColor.White} tooltip={'Закрыть панель'}
-                        className={JoinClasses(PaddingType.P0, TooltipType.PositionLeft)} style={{width: '30px', height: '30px'}} handleClick={closeAddView}>
+                        className={JoinClasses(PaddingType.P0, TooltipType.PositionLeft)} style={{width: '30px', height: '30px'}} handleClick={CloseView}>
                     <Icon icon={faCircleXmark}/>
                 </Button>
             </div>
@@ -82,7 +84,8 @@ export function EditSchedulesView({closeAddView, updateSignal, schedule} : IEdit
                 { hasSuccess() }
                 <Field>
                     <Label>Дата для расписания</Label>
-                    <InputText type={InputTextType.Date} name='scheduleDate' placeholder={'Выберите дату'}/>
+                    <InputText type={InputTextType.Date} name='scheduleDate' placeholder={'Выберите дату'}
+                               value={GetStringDate(new Date(schedule.day)) ?? undefined}/>
                 </Field>
                 <Buttons>
                     <Button type={ButtonType.IsSubmit} text='Изменить' color={AdditionalElementColor.White} isOutlined/>

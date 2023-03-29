@@ -5,10 +5,9 @@ import {
     ColumnSize,
     Flex,
     FlexAlignItemsType,
-    FlexJustifyContentType, MarginType,
+    FlexJustifyContentType, JoinClasses, MarginType,
     PaddingType
 } from "../../ui";
-import {JoinClasses} from "../../ui/helpers/UIHelper";
 import {AuthorizationForm} from "../components/AuthorizationForm";
 //
 export function AuthorizationPage() : JSX.Element{

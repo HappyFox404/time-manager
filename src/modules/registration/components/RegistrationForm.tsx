@@ -10,7 +10,7 @@ import {
     Fieldset,
     Icon,
     InputText,
-    InputTextType,
+    InputTextType, JoinClasses,
     Label,
     MarginType,
     Notification,
@@ -19,7 +19,6 @@ import {
 import {Link, useNavigate} from "react-router-dom";
 import {faEnvelope, faKey, faUser} from "@fortawesome/free-solid-svg-icons";
 import {AppRoutes} from "../../../constants/AppRoutes";
-import {JoinClasses} from "../../ui/helpers/UIHelper";
 import {useState} from "react";
 import {RegistrationRequest} from "../api/RegistrationRequest";
 

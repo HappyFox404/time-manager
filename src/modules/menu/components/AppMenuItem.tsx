@@ -1,5 +1,4 @@
-import {Button, ButtonType, Title} from "../../ui";
-import {JoinClasses} from "../../ui/helpers/UIHelper";
+import {Button, ButtonType, JoinClasses, Title} from "../../ui";
 
 export interface IAppMenuItemType {
     text: string;

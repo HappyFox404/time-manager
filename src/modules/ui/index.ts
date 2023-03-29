@@ -38,3 +38,6 @@ export {MessageBody} from './components/elements/message/MessageBody'
 
 export {Button, ButtonSize, ButtonType, ButtonColor} from './components/interactive/Button'
 export {InputText, InputTextType, InputSize} from './components/interactive/InputText'
+
+export {JoinClasses} from './helpers/UIHelper'
+export {CreateToast, ToastPositionType} from './helpers/CreateToast'
